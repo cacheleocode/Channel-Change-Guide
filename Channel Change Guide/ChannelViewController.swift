@@ -6,7 +6,9 @@ import AVFoundation
     @IBOutlet weak var guide: UIImageView!
     
     let queue = DispatchQueue(label: "queue", attributes: .concurrent)
-    let task = DispatchWorkItem { debugPrint("do something") }
+
+    private var pendingTask: DispatchWorkItem?
+    private var pendingTask2: DispatchWorkItem?
     
     required init(coder aDecoder: NSCoder)  {
         super.init(coder: aDecoder)!
@@ -14,6 +16,24 @@ import AVFoundation
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let taskFadeIn = DispatchWorkItem {
+            UIImageView.animate(withDuration: 1.5, animations: {
+                self.guide?.alpha = 1.0
+                debugPrint("scheduled show")
+            })
+        }
+        
+        let taskFadeOut = DispatchWorkItem {
+            UIImageView.animate(withDuration: 1.5, animations: {
+                self.guide?.alpha = 0.0
+                debugPrint("scheduled hide")
+            })
+        }
+        
+        pendingTask = taskFadeIn
+        pendingTask2 = taskFadeOut
+
         
         // swipe detection
         
@@ -35,38 +55,16 @@ import AVFoundation
     }
     
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        debugPrint("recognize")
         
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            // execute task in 2 seconds
-            
-            //task.cancel()
-            
-            
-            switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.right:
-                print("Swiped right")
-                
-                
-                
-                
-                
-                // optional: cancel task
-                
-                
-                /*
-                UIView.animate(withDuration: 1.5, animations: {
-                    self.guide?.alpha = 1.0
-                })
-                */
-            case UISwipeGestureRecognizerDirection.down:
-                print("Swiped down")
-            case UISwipeGestureRecognizerDirection.left:
-                print("Swiped left")
-            case UISwipeGestureRecognizerDirection.up:
-                print("Swiped up")
-            default:
-                break
-            }
+        // fade in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+            self.queue.async(execute: self.pendingTask!)
+        }
+        
+        // fade out
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            self.queue.async(execute: self.pendingTask2!)
         }
     }
     
@@ -83,13 +81,18 @@ import AVFoundation
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-            self.queue.async(execute: self.task) // not work
-        }
+        
         
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
     }
 }
