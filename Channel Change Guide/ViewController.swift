@@ -47,12 +47,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 player.seek(to: kCMTimeZero)
-                player.pause()
+                player.play()
             }
         })
         
         player.isMuted = false;
-        player.pause()
+        player.play()
         
         // video player CBS
         guard let pathCBS = Bundle.main.path(forResource: "cbs", ofType:"mp4") else {
@@ -72,12 +72,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCBS.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCBS.seek(to: kCMTimeZero)
-                playerCBS.pause()
+                playerCBS.play()
             }
         })
         
         playerCBS.isMuted = true;
-        playerCBS.pause()
+        playerCBS.play()
         
         
         // video player CNN
@@ -98,12 +98,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCNN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCNN.seek(to: kCMTimeZero)
-                playerCNN.pause()
+                playerCNN.play()
             }
         })
         
         playerCNN.isMuted = true;
-        playerCNN.pause()
+        playerCNN.play()
         
         // video player CSN
         guard let pathCSN = Bundle.main.path(forResource: "csn", ofType:"mp4") else {
@@ -123,12 +123,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCSN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCSN.seek(to: kCMTimeZero)
-                playerCSN.pause()
+                playerCSN.play()
             }
         })
         
         playerCSN.isMuted = true;
-        playerCSN.pause()
+        playerCSN.play()
         
         // video player ESPN
         guard let pathESPN = Bundle.main.path(forResource: "espn", ofType:"mp4") else {
@@ -148,12 +148,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerESPN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerESPN.seek(to: kCMTimeZero)
-                playerESPN.pause()
+                playerESPN.play()
             }
         })
         
         playerESPN.isMuted = true;
-        playerESPN.pause()
+        playerESPN.play()
         
         // video player FOX
         guard let pathFOX = Bundle.main.path(forResource: "fox", ofType:"mp4") else {
@@ -173,12 +173,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerFOX.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerFOX.seek(to: kCMTimeZero)
-                playerFOX.pause()
+                playerFOX.play()
             }
         })
         
         playerFOX.isMuted = true;
-        playerFOX.pause()
+        playerFOX.play()
         
         // video player HBO
         guard let pathHBO = Bundle.main.path(forResource: "hbo", ofType:"mp4") else {
@@ -198,12 +198,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerHBO.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerHBO.seek(to: kCMTimeZero)
-                playerHBO.pause()
+                playerHBO.play()
             }
         })
         
         playerHBO.isMuted = true;
-        playerHBO.pause()
+        playerHBO.play()
         
         // video player HSN
         guard let pathHSN = Bundle.main.path(forResource: "hsn", ofType:"mp4") else {
@@ -223,12 +223,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerHSN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerHSN.seek(to: kCMTimeZero)
-                playerHSN.pause()
+                playerHSN.play()
             }
         })
         
         playerHSN.isMuted = true;
-        playerHSN.pause()
+        playerHSN.play()
         
         pageControl.addTarget(self, action: #selector(ViewController.didChangePageControlValue), for: .valueChanged)
     

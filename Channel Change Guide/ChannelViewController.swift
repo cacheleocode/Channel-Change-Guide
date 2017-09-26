@@ -19,8 +19,8 @@ import AVFoundation
         
         let taskFadeIn = DispatchWorkItem {
             UIImageView.animate(withDuration: 1.5, animations: {
-                self.guide?.alpha = 1.0
                 debugPrint("scheduled show")
+                self.guide?.alpha = 1.0
             })
         }
         
@@ -52,6 +52,8 @@ import AVFoundation
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         self.view.addGestureRecognizer(swipeUp)
+        
+        
     }
     
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -66,6 +68,8 @@ import AVFoundation
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             self.queue.async(execute: self.pendingTask2!)
         }
+        
+        
     }
     
     
@@ -95,4 +99,6 @@ import AVFoundation
         
         
     }
+    
+    
 }
