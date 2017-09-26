@@ -3,7 +3,7 @@ import AVFoundation
 
 class PageViewController: UIPageViewController {
     weak var gotDelegate: PageViewControllerDelegate?
-    
+        
     var swipeMode = false
     var swipeCount = 0
     
@@ -52,6 +52,7 @@ class PageViewController: UIPageViewController {
         }
         
         gotDelegate?.pageViewController(self, didUpdatePageCount: orderedViewControllers.count)
+        
         
 
     }
@@ -123,8 +124,7 @@ class PageViewController: UIPageViewController {
     fileprivate func notifyDelegateOfNewIndex() {
         if let firstViewController = viewControllers?.first,
             let index = orderedViewControllers.index(of: firstViewController) {
-            gotDelegate?.pageViewController(self,
-                                            didUpdatePageIndex: index)
+            gotDelegate?.pageViewController(self, didUpdatePageIndex: index)
         }
         
     }
@@ -189,7 +189,6 @@ extension PageViewController: UIPageViewControllerDelegate {
                             previousViewControllers: [UIViewController],
                             transitionCompleted completed: Bool) {
         notifyDelegateOfNewIndex()
-        
     }
 }
 

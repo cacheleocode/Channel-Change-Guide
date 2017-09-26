@@ -26,10 +26,12 @@ class MyApplication: UIApplication {
         
         if restartTimer {
             // Touches ended || cancelled, restart timer
-            print("Touches ended. Restart timer")
+            //print("Touches ended. Restart timer")
+            
+        
         } else {
             // Touches in progress - !ended, !cancelled, just invalidate it
-            print("Touches in progress. Invalidate timer")
+            //print("Touches in progress. Invalidate timer")
         }
         
         super.sendEvent(event)
