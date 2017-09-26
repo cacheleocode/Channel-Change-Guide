@@ -11,6 +11,16 @@
 		8DF81C2E1F7AD4110017461B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF81C2D1F7AD4110017461B /* ViewController.swift */; };
 		8DF81C311F7AD4120017461B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C2F1F7AD4120017461B /* Main.storyboard */; };
 		8DF81C331F7AD4120017461B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C321F7AD4120017461B /* Assets.xcassets */; };
+		8DF81C421F7AD63E0017461B /* amc.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C3A1F7AD63E0017461B /* amc.mp4 */; };
+		8DF81C431F7AD63E0017461B /* cbs.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C3B1F7AD63E0017461B /* cbs.mp4 */; };
+		8DF81C441F7AD63E0017461B /* cnn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C3C1F7AD63E0017461B /* cnn.mp4 */; };
+		8DF81C451F7AD63E0017461B /* csn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C3D1F7AD63E0017461B /* csn.mp4 */; };
+		8DF81C461F7AD63E0017461B /* espn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C3E1F7AD63E0017461B /* espn.mp4 */; };
+		8DF81C471F7AD63E0017461B /* fox.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C3F1F7AD63E0017461B /* fox.mp4 */; };
+		8DF81C481F7AD63E0017461B /* hbo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C401F7AD63E0017461B /* hbo.mp4 */; };
+		8DF81C491F7AD63E0017461B /* hsn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C411F7AD63E0017461B /* hsn.mp4 */; };
+		8DF81C4B1F7AD6830017461B /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF81C4A1F7AD6830017461B /* PageViewController.swift */; };
+		8DF81C4D1F7AD6AB0017461B /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF81C4C1F7AD6AB0017461B /* ChannelViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +30,16 @@
 		8DF81C301F7AD4120017461B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8DF81C321F7AD4120017461B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DF81C341F7AD4120017461B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DF81C3A1F7AD63E0017461B /* amc.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = amc.mp4; sourceTree = "<group>"; };
+		8DF81C3B1F7AD63E0017461B /* cbs.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = cbs.mp4; sourceTree = "<group>"; };
+		8DF81C3C1F7AD63E0017461B /* cnn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = cnn.mp4; sourceTree = "<group>"; };
+		8DF81C3D1F7AD63E0017461B /* csn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = csn.mp4; sourceTree = "<group>"; };
+		8DF81C3E1F7AD63E0017461B /* espn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = espn.mp4; sourceTree = "<group>"; };
+		8DF81C3F1F7AD63E0017461B /* fox.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = fox.mp4; sourceTree = "<group>"; };
+		8DF81C401F7AD63E0017461B /* hbo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = hbo.mp4; sourceTree = "<group>"; };
+		8DF81C411F7AD63E0017461B /* hsn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = hsn.mp4; sourceTree = "<group>"; };
+		8DF81C4A1F7AD6830017461B /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		8DF81C4C1F7AD6AB0017461B /* ChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +56,14 @@
 		8DF81C1F1F7AD4110017461B = {
 			isa = PBXGroup;
 			children = (
+				8DF81C3A1F7AD63E0017461B /* amc.mp4 */,
+				8DF81C3B1F7AD63E0017461B /* cbs.mp4 */,
+				8DF81C3C1F7AD63E0017461B /* cnn.mp4 */,
+				8DF81C3D1F7AD63E0017461B /* csn.mp4 */,
+				8DF81C3E1F7AD63E0017461B /* espn.mp4 */,
+				8DF81C3F1F7AD63E0017461B /* fox.mp4 */,
+				8DF81C401F7AD63E0017461B /* hbo.mp4 */,
+				8DF81C411F7AD63E0017461B /* hsn.mp4 */,
 				8DF81C2A1F7AD4110017461B /* Channel Change Guide */,
 				8DF81C291F7AD4110017461B /* Products */,
 			);
@@ -57,6 +85,8 @@
 				8DF81C2F1F7AD4120017461B /* Main.storyboard */,
 				8DF81C321F7AD4120017461B /* Assets.xcassets */,
 				8DF81C341F7AD4120017461B /* Info.plist */,
+				8DF81C4A1F7AD6830017461B /* PageViewController.swift */,
+				8DF81C4C1F7AD6AB0017461B /* ChannelViewController.swift */,
 			);
 			path = "Channel Change Guide";
 			sourceTree = "<group>";
@@ -123,6 +153,14 @@
 			files = (
 				8DF81C331F7AD4120017461B /* Assets.xcassets in Resources */,
 				8DF81C311F7AD4120017461B /* Main.storyboard in Resources */,
+				8DF81C421F7AD63E0017461B /* amc.mp4 in Resources */,
+				8DF81C431F7AD63E0017461B /* cbs.mp4 in Resources */,
+				8DF81C441F7AD63E0017461B /* cnn.mp4 in Resources */,
+				8DF81C451F7AD63E0017461B /* csn.mp4 in Resources */,
+				8DF81C461F7AD63E0017461B /* espn.mp4 in Resources */,
+				8DF81C471F7AD63E0017461B /* fox.mp4 in Resources */,
+				8DF81C481F7AD63E0017461B /* hbo.mp4 in Resources */,
+				8DF81C491F7AD63E0017461B /* hsn.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +171,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DF81C4B1F7AD6830017461B /* PageViewController.swift in Sources */,
 				8DF81C2E1F7AD4110017461B /* ViewController.swift in Sources */,
+				8DF81C4D1F7AD6AB0017461B /* ChannelViewController.swift in Sources */,
 				8DF81C2C1F7AD4110017461B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

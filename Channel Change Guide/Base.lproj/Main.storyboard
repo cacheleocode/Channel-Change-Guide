@@ -1,26 +1,505 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gjb-cV-ex8">
+    <device id="appleTV" orientation="landscape">
+        <adaptation id="light"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="tvOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gjb-cV-ex8" customClass="ViewController" customModule="Channel_Change_C" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="FN8-2S-wlo"/>
+                        <viewControllerLayoutGuide type="bottom" id="211-Dy-ZQs"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="w7O-um-obi">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LaI-8t-do8">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
+                            <containerView clearsContextBeforeDrawing="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U86-eW-DBU">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <connections>
+                                    <segue destination="A7T-Ec-iyt" kind="embed" id="NV1-3y-c0E"/>
+                                </connections>
+                            </containerView>
+                            <pageControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Xvt-1d-6RY">
+                                <rect key="frame" x="20" y="20" width="96" height="30"/>
+                                <color key="pageIndicatorTintColor" red="1" green="0.086735173969348711" blue="0.92219595382380481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="currentPageIndicatorTintColor" red="0.32389615773020675" green="0.87879834254143652" blue="0.86665754680695706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </pageControl>
+                            <button hidden="YES" opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ku-Ht-96p">
+                                <rect key="frame" x="1800" y="994" width="100" height="66"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapNextButton:" destination="gjb-cV-ex8" eventType="touchUpInside" id="Spg-TK-xMW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="U86-eW-DBU" firstAttribute="top" secondItem="FN8-2S-wlo" secondAttribute="bottom" id="9hR-ba-ImR"/>
+                            <constraint firstAttribute="trailing" secondItem="U86-eW-DBU" secondAttribute="trailing" id="Xhg-vc-F6h"/>
+                            <constraint firstItem="Xvt-1d-6RY" firstAttribute="leading" secondItem="w7O-um-obi" secondAttribute="leading" constant="20" id="ZtT-uh-yP0"/>
+                            <constraint firstItem="211-Dy-ZQs" firstAttribute="top" secondItem="U86-eW-DBU" secondAttribute="bottom" id="eAc-87-5bd"/>
+                            <constraint firstAttribute="trailing" secondItem="3Ku-Ht-96p" secondAttribute="trailing" constant="20" id="glm-ZK-bb1"/>
+                            <constraint firstItem="211-Dy-ZQs" firstAttribute="top" secondItem="3Ku-Ht-96p" secondAttribute="bottom" constant="20" id="jKU-R3-9jq"/>
+                            <constraint firstItem="U86-eW-DBU" firstAttribute="leading" secondItem="w7O-um-obi" secondAttribute="leading" id="pdy-6m-mzI"/>
+                            <constraint firstItem="Xvt-1d-6RY" firstAttribute="top" secondItem="FN8-2S-wlo" secondAttribute="bottom" constant="20" id="vhe-BL-hhL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="U86-eW-DBU" id="4QV-HF-nea"/>
+                        <outlet property="pageControl" destination="Xvt-1d-6RY" id="FVe-8F-FO2"/>
+                        <outlet property="videoView" destination="LaI-8t-do8" id="lzC-iD-KSW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="erM-on-UPn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="19" y="-2613"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="3Iv-Zt-2iB">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="A7T-Ec-iyt" customClass="PageViewController" customModule="Channel_Change_C" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tfP-Ta-ha7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="19" y="-640"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="0lZ-ib-WDV">
+            <objects>
+                <viewController storyboardIdentifier="CSNViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vLd-VQ-PH0" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Oq9-E0-VNs"/>
+                        <viewControllerLayoutGuide type="bottom" id="kEr-g4-6fA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dnb-1J-9zv">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide3" translatesAutoresizingMaskIntoConstraints="NO" id="1gd-vU-dcU">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w99-OQ-hPG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="6490" y="814"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="aGU-X0-dNH">
+            <objects>
+                <viewController storyboardIdentifier="CSNxViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FYh-Lh-nQo" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Kmq-1w-Pq8"/>
+                        <viewControllerLayoutGuide type="bottom" id="N3Z-u2-FEy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rSk-Ew-Ele">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="Jsi-vu-BWb">
+                                <rect key="frame" x="1487" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UFy-l2-q8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7523" y="2341"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="KVc-yt-013">
+            <objects>
+                <viewController storyboardIdentifier="xCSNViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="taR-5X-KF2" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Lrb-4Y-PE4"/>
+                        <viewControllerLayoutGuide type="bottom" id="2Tf-3K-z7H"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GlF-6S-z9B">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="zQh-qX-SWc">
+                                <rect key="frame" x="0.0" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oin-Uv-57q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5286" y="2341"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="I8F-ng-crr">
+            <objects>
+                <viewController storyboardIdentifier="CBSViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VTE-s4-3Bo" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4df-QK-ncG"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nt4-Xm-6La"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="x8p-vz-T33">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide1" translatesAutoresizingMaskIntoConstraints="NO" id="Yds-h3-WQT">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JPh-Io-HHJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4788" y="716"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="X5o-c6-wvI">
+            <objects>
+                <viewController storyboardIdentifier="CBSxViewController" modalPresentationStyle="pageSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gzt-io-4Z5" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MiQ-ob-DsS"/>
+                        <viewControllerLayoutGuide type="bottom" id="HrC-Ip-9XG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1aJ-nT-TnR">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="Dm3-z9-vI9">
+                                <rect key="frame" x="1487" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YbN-gx-XaO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3575" y="2290"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="rV6-QZ-I8T">
+            <objects>
+                <viewController storyboardIdentifier="FOXViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="M8B-o4-fAk" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v8W-2z-DBd"/>
+                        <viewControllerLayoutGuide type="bottom" id="y05-Re-bi8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LuN-ZE-N63">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide5" translatesAutoresizingMaskIntoConstraints="NO" id="ujh-fe-g6p">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XQU-oz-rxR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="16710" y="814"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="LRf-AG-Cd9">
+            <objects>
+                <viewController storyboardIdentifier="FOXxViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PB7-cV-Hoz" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BDx-Xg-lxg"/>
+                        <viewControllerLayoutGuide type="bottom" id="cmE-Ab-zuF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bxs-EU-vIM">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="sjV-97-U2c">
+                                <rect key="frame" x="1487" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M1N-2F-v3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="17835" y="2230"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="31F-eJ-BIo">
+            <objects>
+                <viewController storyboardIdentifier="xFOXViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="itL-OJ-QMy" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MSa-Bo-dmK"/>
+                        <viewControllerLayoutGuide type="bottom" id="Rgq-WO-Wf7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DQf-KL-i9N">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="iCQ-kH-mL9">
+                                <rect key="frame" x="0.0" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vcn-Hc-j5A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="15490" y="2230"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="5SG-Hj-0g7">
+            <objects>
+                <viewController storyboardIdentifier="CNNViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="g5I-D7-xvE" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lz2-R3-AnC"/>
+                        <viewControllerLayoutGuide type="bottom" id="gxS-1V-upG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="L7L-5A-wf1">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide2" translatesAutoresizingMaskIntoConstraints="NO" id="YZB-lF-eAk">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VsS-Pv-jff" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="917" y="814"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="QkU-u4-dCV">
+            <objects>
+                <viewController storyboardIdentifier="CNNxViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PEO-d2-Oum" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BFq-7N-pCW"/>
+                        <viewControllerLayoutGuide type="bottom" id="xFz-G5-2JZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lEe-Xs-Iix">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="AGg-ce-ZGW">
+                                <rect key="frame" x="1487" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tV4-b1-75p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2167" y="2341"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="dHW-kO-4mP">
+            <objects>
+                <viewController storyboardIdentifier="xCNNViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mad-dQ-zuM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jPS-lh-yIr"/>
+                        <viewControllerLayoutGuide type="bottom" id="mf1-cj-kKp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FQm-2r-9Bc">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="D3J-3E-eff">
+                                <rect key="frame" x="0.0" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0hH-rm-VH8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-502" y="2341"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="cbH-eX-U0w">
+            <objects>
+                <viewController storyboardIdentifier="xCBSViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uFK-4e-ZfG" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yKE-Yg-tMb"/>
+                        <viewControllerLayoutGuide type="bottom" id="WzI-Tr-j04"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" restorationIdentifier="xCBSViewController" id="crd-tR-hcZ">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="lgM-jf-gX2">
+                                <rect key="frame" x="0.0" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S8z-uS-3pK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6227" y="2290"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="cWq-2E-ME6">
+            <objects>
+                <viewController storyboardIdentifier="AMCViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xoz-Im-lQw" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rEe-LU-WEu"/>
+                        <viewControllerLayoutGuide type="bottom" id="LhW-hI-PaP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VwB-MW-SDj">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide0" translatesAutoresizingMaskIntoConstraints="NO" id="eRJ-el-iIC">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jXX-g8-aiW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-7012" y="716"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="lmx-ey-m8M">
+            <objects>
+                <viewController storyboardIdentifier="AMCxViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9gm-ft-D9N" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HxG-qG-cS2"/>
+                        <viewControllerLayoutGuide type="bottom" id="eYk-eK-Lv9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b09-8h-8kQ">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="qrC-Dg-OA0">
+                                <rect key="frame" x="1487" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GSR-wE-Xf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-9340" y="2230"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="o6I-cb-K42">
+            <objects>
+                <viewController storyboardIdentifier="xAMCViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LAB-66-D4q" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="44j-74-epg"/>
+                        <viewControllerLayoutGuide type="bottom" id="7BQ-cd-RS9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8hK-4f-DyT">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="l2n-df-5VO">
+                                <rect key="frame" x="0.0" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2b2-OV-xuv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-12214" y="2230"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="qRy-fM-bSV">
+            <objects>
+                <viewController storyboardIdentifier="ESPNViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GY4-Pq-8RY" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Sn-jB-clO"/>
+                        <viewControllerLayoutGuide type="bottom" id="oKf-mC-0Wp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="D7d-oM-V9K">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide4" translatesAutoresizingMaskIntoConstraints="NO" id="Egm-M1-UZy">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7CK-En-VCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="11268" y="814"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="is3-ZS-Jha">
+            <objects>
+                <viewController storyboardIdentifier="ESPNxViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NGn-Ko-NmD" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2qa-iI-3Q3"/>
+                        <viewControllerLayoutGuide type="bottom" id="8mu-GV-4R0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gbS-cV-RJp">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="ooD-jO-Ndg">
+                                <rect key="frame" x="1487" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E2e-d3-Ofg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12512" y="2341"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="YEb-Id-LHL">
+            <objects>
+                <viewController storyboardIdentifier="xESPNViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ytZ-Ze-ALE" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="agt-td-LGZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wFn-uE-ScA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bmI-j2-kh1">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peek" translatesAutoresizingMaskIntoConstraints="NO" id="2l5-Sk-Nws">
+                                <rect key="frame" x="0.0" y="0.0" width="433" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sGS-Ze-5wC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="10274" y="2341"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="guide0" width="1920" height="1080"/>
+        <image name="guide1" width="1920" height="1080"/>
+        <image name="guide2" width="1920" height="1080"/>
+        <image name="guide3" width="1920" height="1080"/>
+        <image name="guide4" width="1920" height="1080"/>
+        <image name="guide5" width="1920" height="1080"/>
+        <image name="peek" width="433" height="1080"/>
+    </resources>
 </document>
