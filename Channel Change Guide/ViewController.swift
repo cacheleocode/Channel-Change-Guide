@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     
     var swipeMode = false
     
+    
     var pageViewController: PageViewController? {
         didSet {
             pageViewController?.gotDelegate = self
@@ -230,6 +231,42 @@ class ViewController: UIViewController {
         playerHSN.play()
         
         pageControl.addTarget(self, action: #selector(ViewController.didChangePageControlValue), for: .valueChanged)
+    
+    
+        // swipe detection
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeDown.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(swipeDown)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeUp.direction = UISwipeGestureRecognizerDirection.up
+        self.view.addGestureRecognizer(swipeUp)
+    }
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.right:
+                debugPrint("Swiped right")
+            case UISwipeGestureRecognizerDirection.down:
+                debugPrint("Swiped down")
+            case UISwipeGestureRecognizerDirection.left:
+                debugPrint("Swiped left")
+            case UISwipeGestureRecognizerDirection.up:
+                debugPrint("Swiped up")
+            default:
+                break
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -287,6 +324,9 @@ extension ViewController: PageViewControllerDelegate {
             
             playerLayerHSN?.player?.isMuted = true
             playerLayerHSN?.isHidden = true
+            
+            
+
             
             debugPrint("0")
         case 1: // CBS

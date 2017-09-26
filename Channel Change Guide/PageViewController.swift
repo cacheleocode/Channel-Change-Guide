@@ -51,9 +51,11 @@ class PageViewController: UIPageViewController {
             scrollToViewController(initialViewController)
         }
         
-        gotDelegate?.pageViewController(self,
-                                        didUpdatePageCount: orderedViewControllers.count)
+        gotDelegate?.pageViewController(self, didUpdatePageCount: orderedViewControllers.count)
+        
+
     }
+    
     
     /**
      Scrolls to the next view controller.

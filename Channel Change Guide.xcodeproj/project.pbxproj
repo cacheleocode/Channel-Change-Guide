@@ -21,6 +21,8 @@
 		8DF81C491F7AD63E0017461B /* hsn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8DF81C411F7AD63E0017461B /* hsn.mp4 */; };
 		8DF81C4B1F7AD6830017461B /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF81C4A1F7AD6830017461B /* PageViewController.swift */; };
 		8DF81C4D1F7AD6AB0017461B /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF81C4C1F7AD6AB0017461B /* ChannelViewController.swift */; };
+		8DF81C4F1F7ADF610017461B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF81C4E1F7ADF610017461B /* main.swift */; };
+		8DF81C511F7ADF830017461B /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF81C501F7ADF830017461B /* UIApplication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		8DF81C411F7AD63E0017461B /* hsn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = hsn.mp4; sourceTree = "<group>"; };
 		8DF81C4A1F7AD6830017461B /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		8DF81C4C1F7AD6AB0017461B /* ChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
+		8DF81C4E1F7ADF610017461B /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8DF81C501F7ADF830017461B /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,8 @@
 				8DF81C341F7AD4120017461B /* Info.plist */,
 				8DF81C4A1F7AD6830017461B /* PageViewController.swift */,
 				8DF81C4C1F7AD6AB0017461B /* ChannelViewController.swift */,
+				8DF81C4E1F7ADF610017461B /* main.swift */,
+				8DF81C501F7ADF830017461B /* UIApplication.swift */,
 			);
 			path = "Channel Change Guide";
 			sourceTree = "<group>";
@@ -171,7 +177,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DF81C511F7ADF830017461B /* UIApplication.swift in Sources */,
 				8DF81C4B1F7AD6830017461B /* PageViewController.swift in Sources */,
+				8DF81C4F1F7ADF610017461B /* main.swift in Sources */,
 				8DF81C2E1F7AD4110017461B /* ViewController.swift in Sources */,
 				8DF81C4D1F7AD6AB0017461B /* ChannelViewController.swift in Sources */,
 				8DF81C2C1F7AD4110017461B /* AppDelegate.swift in Sources */,

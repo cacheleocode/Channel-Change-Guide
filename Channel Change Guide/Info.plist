@@ -26,6 +26,8 @@
 	<array>
 		<string>arm64</string>
 	</array>
+	<key>NSPrincipalClass</key>
+	<string>MyApplication</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
 </dict>
