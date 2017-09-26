@@ -91,16 +91,19 @@
                         <viewControllerLayoutGuide type="top" id="Oq9-E0-VNs"/>
                         <viewControllerLayoutGuide type="bottom" id="kEr-g4-6fA"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="dnb-1J-9zv">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="dnb-1J-9zv">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide3" translatesAutoresizingMaskIntoConstraints="NO" id="1gd-vU-dcU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide3" translatesAutoresizingMaskIntoConstraints="NO" id="1gd-vU-dcU">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="guideContainer" destination="dnb-1J-9zv" id="zfD-4Q-eZQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w99-OQ-hPG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -160,11 +163,11 @@
                         <viewControllerLayoutGuide type="top" id="4df-QK-ncG"/>
                         <viewControllerLayoutGuide type="bottom" id="Nt4-Xm-6La"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="x8p-vz-T33">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="x8p-vz-T33">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide1" translatesAutoresizingMaskIntoConstraints="NO" id="Yds-h3-WQT">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide1" translatesAutoresizingMaskIntoConstraints="NO" id="Yds-h3-WQT">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -206,11 +209,11 @@
                         <viewControllerLayoutGuide type="top" id="v8W-2z-DBd"/>
                         <viewControllerLayoutGuide type="bottom" id="y05-Re-bi8"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="LuN-ZE-N63">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="LuN-ZE-N63">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide5" translatesAutoresizingMaskIntoConstraints="NO" id="ujh-fe-g6p">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide5" translatesAutoresizingMaskIntoConstraints="NO" id="ujh-fe-g6p">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -275,11 +278,11 @@
                         <viewControllerLayoutGuide type="top" id="lz2-R3-AnC"/>
                         <viewControllerLayoutGuide type="bottom" id="gxS-1V-upG"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="L7L-5A-wf1">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="L7L-5A-wf1">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide2" translatesAutoresizingMaskIntoConstraints="NO" id="YZB-lF-eAk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide2" translatesAutoresizingMaskIntoConstraints="NO" id="YZB-lF-eAk">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -367,11 +370,11 @@
                         <viewControllerLayoutGuide type="top" id="rEe-LU-WEu"/>
                         <viewControllerLayoutGuide type="bottom" id="LhW-hI-PaP"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="VwB-MW-SDj">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="VwB-MW-SDj">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide0" translatesAutoresizingMaskIntoConstraints="NO" id="eRJ-el-iIC">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide0" translatesAutoresizingMaskIntoConstraints="NO" id="eRJ-el-iIC">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -439,11 +442,11 @@
                         <viewControllerLayoutGuide type="top" id="4Sn-jB-clO"/>
                         <viewControllerLayoutGuide type="bottom" id="oKf-mC-0Wp"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="D7d-oM-V9K">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="D7d-oM-V9K">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide4" translatesAutoresizingMaskIntoConstraints="NO" id="Egm-M1-UZy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="guide4" translatesAutoresizingMaskIntoConstraints="NO" id="Egm-M1-UZy">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>

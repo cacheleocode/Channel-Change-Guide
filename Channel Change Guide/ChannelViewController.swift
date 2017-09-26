@@ -3,6 +3,7 @@ import AVFoundation
 
 @IBDesignable class ChannelViewController: UIViewController {
     @IBInspectable var channel: String!
+    @IBOutlet var guideContainer: UIView!
     @IBOutlet weak var guide: UIImageView!
     
     let queue = DispatchQueue(label: "queue", attributes: .concurrent)
@@ -17,18 +18,38 @@ import AVFoundation
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.guide?.alpha = 0.0
+        
+        /*
+        // fade out after 2 seconds, then fade back in
+        UIView.animate(withDuration: 1.5, delay: 2.0, animations: {
+            self.guide?.alpha = 0.0
+        }, completion: {
+            (finished: Bool) -> Void in
+                UIView.animate(withDuration: 1.5, animations: {
+                    self.guide?.alpha = 1.0
+                }, completion: nil)
+        })
+        */
+        
         let taskFadeIn = DispatchWorkItem {
-            UIImageView.animate(withDuration: 1.5, animations: {
-                debugPrint("scheduled show")
+            /*
+            UIView.animate(withDuration: 1.5, animations: {
                 self.guide?.alpha = 1.0
-            })
+            }, completion: nil)
+            */
+            
+            debugPrint("scheduled show")
         }
         
         let taskFadeOut = DispatchWorkItem {
-            UIImageView.animate(withDuration: 1.5, animations: {
+            /*
+            UIView.animate(withDuration: 1.5, animations: {
                 self.guide?.alpha = 0.0
-                debugPrint("scheduled hide")
-            })
+            }, completion: nil)
+            */
+            
+            debugPrint("scheduled hide")
         }
         
         pendingTask = taskFadeIn
@@ -56,8 +77,18 @@ import AVFoundation
         
     }
     
+    
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         debugPrint("recognize")
+        
+        UIView.animate(withDuration: 1.5, animations: {
+            self.guide?.alpha = 1.0
+        }, completion: {
+            (finished: Bool) -> Void in
+            UIView.animate(withDuration: 1.5, delay: 2.0, animations: {
+                self.guide?.alpha = 0.0
+            }, completion: nil)
+        })
         
         // fade in
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
