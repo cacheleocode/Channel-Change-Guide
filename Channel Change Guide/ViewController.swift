@@ -6,6 +6,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var guideView: UIView!
     
     
     var playerLayer: AVPlayerLayer?
@@ -17,7 +18,18 @@ class ViewController: UIViewController {
     var playerLayerHBO: AVPlayerLayer?
     var playerLayerHSN: AVPlayerLayer?
     
+    var guideLayer: CALayer?
+    var guideLayerCBS: CALayer?
+    var guideLayerCNN: CALayer?
+    var guideLayerCSN: CALayer?
+    var guideLayerESPN: CALayer?
+    var guideLayerFOX: CALayer?
+    var guideLayerHBO: CALayer?
+    var guideLayerHSN: CALayer?
+    
+    
     var swipeMode = false
+
     
     
     var pageViewController: PageViewController? {
@@ -40,9 +52,7 @@ class ViewController: UIViewController {
         playerLayer = AVPlayerLayer(player: player)
         playerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayer!.frame = self.videoView.frame
-        playerLayerCBS?.isHidden = false
-        
-        self.videoView.layer.addSublayer(playerLayer!)
+        playerLayer?.isHidden = false
         
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
@@ -54,6 +64,19 @@ class ViewController: UIViewController {
         player.isMuted = false;
         player.play()
         
+        self.videoView.layer.addSublayer(playerLayer!)
+        
+        /*
+        // guide AMC
+        guideLayer = CALayer()
+        guideLayer?.contents = UIImage(named: "guide0")?.cgImage
+        guideLayer?.contentsGravity = kCAGravityResizeAspectFill
+        guideLayer!.frame = self.guideView.frame
+        guideLayer?.isHidden = true
+        
+        self.guideView.layer.addSublayer(guideLayer!)
+        */
+ 
         // video player CBS
         guard let pathCBS = Bundle.main.path(forResource: "cbs", ofType:"mp4") else {
             debugPrint("video not found")
@@ -80,6 +103,17 @@ class ViewController: UIViewController {
         playerCBS.play()
         
         
+        /*
+        // guide CBS
+        guideLayerCBS = CALayer()
+        guideLayerCBS?.contents = UIImage(named: "guide1")?.cgImage
+        guideLayerCBS?.contentsGravity = kCAGravityResizeAspectFill
+        guideLayerCBS!.frame = self.guideView.frame
+        guideLayerCBS?.isHidden = true
+        
+        self.guideView.layer.addSublayer(guideLayerCBS!)
+        */
+ 
         // video player CNN
         guard let pathCNN = Bundle.main.path(forResource: "cnn", ofType:"mp4") else {
             debugPrint("video not found")
@@ -105,6 +139,17 @@ class ViewController: UIViewController {
         playerCNN.isMuted = true;
         playerCNN.play()
         
+        /*
+        // guide CNN
+        guideLayerCNN = CALayer()
+        guideLayerCNN?.contents = UIImage(named: "guide2")?.cgImage
+        guideLayerCNN?.contentsGravity = kCAGravityResizeAspectFill
+        guideLayerCNN!.frame = self.guideView.frame
+        guideLayerCNN?.isHidden = true
+        
+        self.guideView.layer.addSublayer(guideLayerCNN!)
+        */
+ 
         // video player CSN
         guard let pathCSN = Bundle.main.path(forResource: "csn", ofType:"mp4") else {
             debugPrint("video not found")
@@ -130,6 +175,17 @@ class ViewController: UIViewController {
         playerCSN.isMuted = true;
         playerCSN.play()
         
+        /*
+        // guide CSN
+        guideLayerCSN = CALayer()
+        guideLayerCSN?.contents = UIImage(named: "guide3")?.cgImage
+        guideLayerCSN?.contentsGravity = kCAGravityResizeAspectFill
+        guideLayerCSN!.frame = self.guideView.frame
+        guideLayerCSN?.isHidden = true
+        
+        self.guideView.layer.addSublayer(guideLayerCSN!)
+        */
+ 
         // video player ESPN
         guard let pathESPN = Bundle.main.path(forResource: "espn", ofType:"mp4") else {
             debugPrint("video not found")
@@ -155,6 +211,17 @@ class ViewController: UIViewController {
         playerESPN.isMuted = true;
         playerESPN.play()
         
+        /*
+        // guide ESPN
+        guideLayerESPN = CALayer()
+        guideLayerESPN?.contents = UIImage(named: "guide4")?.cgImage
+        guideLayerESPN?.contentsGravity = kCAGravityResizeAspectFill
+        guideLayerESPN!.frame = self.guideView.frame
+        guideLayerESPN?.isHidden = true
+        
+        self.guideView.layer.addSublayer(guideLayerESPN!)
+        */
+ 
         // video player FOX
         guard let pathFOX = Bundle.main.path(forResource: "fox", ofType:"mp4") else {
             debugPrint("video not found")
@@ -180,60 +247,34 @@ class ViewController: UIViewController {
         playerFOX.isMuted = true;
         playerFOX.play()
         
-        // video player HBO
-        guard let pathHBO = Bundle.main.path(forResource: "hbo", ofType:"mp4") else {
-            debugPrint("video not found")
-            return
-        }
+        /*
+        // guide FOX
+        guideLayerFOX = CALayer()
+        guideLayerFOX?.contents = UIImage(named: "guide5")?.cgImage
+        guideLayerFOX?.contentsGravity = kCAGravityResizeAspectFill
+        guideLayerFOX!.frame = self.guideView.frame
+        guideLayerFOX?.isHidden = true
+ 
+        self.guideView.layer.addSublayer(guideLayerFOX!)
+        */
         
-        let playerHBO = AVPlayer(url: URL(fileURLWithPath: pathHBO))
         
-        playerLayerHBO = AVPlayerLayer(player: playerHBO)
-        playerLayerHBO?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        playerLayerHBO!.frame = self.videoView.frame
-        playerLayerHBO?.isHidden = true
-        
-        self.videoView.layer.addSublayer(playerLayerHBO!)
-        
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerHBO.currentItem, queue: nil, using: { (_) in
-            DispatchQueue.main.async {
-                playerHBO.seek(to: kCMTimeZero)
-                playerHBO.play()
-            }
-        })
-        
-        playerHBO.isMuted = true;
-        playerHBO.play()
-        
-        // video player HSN
-        guard let pathHSN = Bundle.main.path(forResource: "hsn", ofType:"mp4") else {
-            debugPrint("video not found")
-            return
-        }
-        
-        let playerHSN = AVPlayer(url: URL(fileURLWithPath: pathHSN))
-        
-        playerLayerHSN = AVPlayerLayer(player: playerHSN)
-        playerLayerHSN?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        playerLayerHSN!.frame = self.videoView.frame
-        playerLayerHSN?.isHidden = true
-        
-        self.videoView.layer.addSublayer(playerLayerHSN!)
-        
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerHSN.currentItem, queue: nil, using: { (_) in
-            DispatchQueue.main.async {
-                playerHSN.seek(to: kCMTimeZero)
-                playerHSN.play()
-            }
-        })
-        
-        playerHSN.isMuted = true;
-        playerHSN.play()
+        // add target
         
         pageControl.addTarget(self, action: #selector(ViewController.didChangePageControlValue), for: .valueChanged)
-    
         
+        //pageControl.addTarget(self, action: #selector(ViewController.doChannelChange), for: .allTouchEvents)
+    
+        //pageControl.addTarget(self, action: #selector(self.doChannelChange(_:)), for: .touchUpInside)
+
         // swipe detection
+        
+        //let tap = UITapGestureRecognizer(target: self, action: #selector(self.respondToTa))
+        
+        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapBlurButton(_:)))
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.doChannelChange(_:)))
+        self.view.addGestureRecognizer(tapGesture)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
@@ -252,7 +293,23 @@ class ViewController: UIViewController {
         self.view.addGestureRecognizer(swipeUp)
     }
     
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        for press in presses {
+            if (press.type == .select) {
+                
+                //self.doChannelChange(UITapGestureRecognizer)
+                
+            }  else {
+                super.pressesEnded(presses, with: event)
+            }
+        }
+        
+    }
+
     
+    func doChannelChange(_ sender: UITapGestureRecognizer) {
+        debugPrint("Please Help! is this the one?")
+    }
 
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
@@ -270,6 +327,8 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let pageViewController = segue.destination as? PageViewController {
@@ -305,167 +364,189 @@ extension ViewController: PageViewControllerDelegate {
                             didUpdatePageIndex index: Int) {
         pageControl.currentPage = index
         
-        
+        /*
         switch index {
         case 0: // AMC
+            
             playerLayer?.player?.isMuted = false
             playerLayer?.isHidden = false
+            guideLayer?.isHidden = false
+            
+            /*
+            // fade out after 2 seconds, then fade back in
+            UIView.animate(withDuration: 0.3, animations: {
+                self.guideView.alpha = 1.0
+                debugPrint("fade in")
+            }, completion: {
+                (finished: Bool) -> Void in
+                UIView.animate(withDuration: 0.3, delay: 2.0, animations: {
+                    self.guideView.alpha = 0.0
+                    debugPrint("fade out")
+                }, completion: nil)
+            })
+ */
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
             
-            playerLayerHBO?.player?.isMuted = true
-            playerLayerHBO?.isHidden = true
             
-            playerLayerHSN?.player?.isMuted = true
-            playerLayerHSN?.isHidden = true
-            
-            debugPrint("0")
+            //debugPrint("0")
         case 1: // CBS
             
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = false
             playerLayerCBS?.isHidden = false
+            guideLayerCBS?.isHidden = false
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
             
-            playerLayerHBO?.player?.isMuted = true
-            playerLayerHBO?.isHidden = true
             
-            playerLayerHSN?.player?.isMuted = true
-            playerLayerHSN?.isHidden = true
-            
-            debugPrint("1")
+            //debugPrint("1")
         case 2: // CNN
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = false
             playerLayerCNN?.isHidden = false
+            guideLayerCNN?.isHidden = false
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
             
-            playerLayerHBO?.player?.isMuted = true
-            playerLayerHBO?.isHidden = true
             
-            playerLayerHSN?.player?.isMuted = true
-            playerLayerHSN?.isHidden = true
-            
-            debugPrint("2")
+            //debugPrint("2")
         case 3: // CSN
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = false
             playerLayerCSN?.isHidden = false
+            guideLayerCSN?.isHidden = false
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
             
-            playerLayerHBO?.player?.isMuted = true
-            playerLayerHBO?.isHidden = true
             
-            playerLayerHSN?.player?.isMuted = true
-            playerLayerHSN?.isHidden = true
-            
-            debugPrint("3")
+            //debugPrint("3")
         case 4: // ESPN
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = false
             playerLayerESPN?.isHidden = false
+            guideLayerESPN?.isHidden = false
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
             
-            playerLayerHBO?.player?.isMuted = true
-            playerLayerHBO?.isHidden = true
             
-            playerLayerHSN?.player?.isMuted = true
-            playerLayerHSN?.isHidden = true
-            
-            debugPrint("4")
+            //debugPrint("4")
         case 5: // FOX
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = false
             playerLayerFOX?.isHidden = false
+            guideLayerFOX?.isHidden = false
             
-            playerLayerHBO?.player?.isMuted = true
-            playerLayerHBO?.isHidden = true
             
-            playerLayerHSN?.player?.isMuted = true
-            playerLayerHSN?.isHidden = true
-            
-            debugPrint("5")
+            //debugPrint("5")
         default:
             debugPrint("default")
         }
+        */
     }
 }

@@ -46,17 +46,19 @@ class PageViewController: UIPageViewController {
         
         dataSource = self
         delegate = self
-        
+                
         if let initialViewController = orderedViewControllers.first {
             scrollToViewController(initialViewController)
         }
         
         gotDelegate?.pageViewController(self, didUpdatePageCount: orderedViewControllers.count)
-        
-        
 
     }
     
+    func doSelect(index newIndex: Int) {
+        
+    }
+
     
     /**
      Scrolls to the next view controller.
@@ -125,13 +127,37 @@ class PageViewController: UIPageViewController {
         if let firstViewController = viewControllers?.first,
             let index = orderedViewControllers.index(of: firstViewController) {
             gotDelegate?.pageViewController(self, didUpdatePageIndex: index)
+
         }
         
     }
     
+    
+ 
+
+    /*
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        for press in presses {
+            if (press.type == .select) {
+                
+                if let firstViewController = viewControllers?.first,
+                    let index = orderedViewControllers.index(of: firstViewController) {
+                    
+                }
+
+            }  else {
+                super.pressesEnded(presses, with: event)
+            }
+        }
+        
+    }
+     */
+    
+    
 }
 
 // MARK: UIPageViewControllerDataSource
+
 
 extension PageViewController: UIPageViewControllerDataSource {
     
@@ -180,6 +206,7 @@ extension PageViewController: UIPageViewControllerDataSource {
         
         return orderedViewControllers[nextIndex]
     }
+    
 }
 
 extension PageViewController: UIPageViewControllerDelegate {
