@@ -291,15 +291,206 @@ class ViewController: UIViewController {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         self.view.addGestureRecognizer(swipeUp)
-        
-        
-
     }
     
     
     func doChannelChange(sender: UITapGestureRecognizer) {
         
-        debugPrint(pageControl.currentPage)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.containerView.alpha = 0.8
+            debugPrint("fade in")
+        }, completion: {
+            (finished: Bool) -> Void in
+            UIView.animate(withDuration: 0.3, delay: 2.0, animations: {
+                self.containerView.alpha = 0.0
+                debugPrint("fade out")
+            }, completion: nil)
+        })
+        
+        switch pageControl.currentPage {
+        case 0: // AMC
+            
+            
+            
+            playerLayer?.player?.isMuted = false
+            playerLayer?.isHidden = false
+            guideLayer?.isHidden = false
+            
+            /*
+            // fade out after 2 seconds, then fade back in
+            UIView.animate(withDuration: 0.3, animations: {
+                self.guideView.alpha = 1.0
+                debugPrint("fade in")
+            }, completion: {
+                (finished: Bool) -> Void in
+                UIView.animate(withDuration: 0.3, delay: 2.0, animations: {
+                    self.guideView.alpha = 0.0
+                    debugPrint("fade out")
+                }, completion: nil)
+            })
+            */
+            
+            playerLayerCBS?.player?.isMuted = true
+            playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
+            
+            playerLayerCNN?.player?.isMuted = true
+            playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
+            
+            playerLayerCSN?.player?.isMuted = true
+            playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
+            
+            playerLayerESPN?.player?.isMuted = true
+            playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
+            
+            playerLayerFOX?.player?.isMuted = true
+            playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
+            
+            
+        //debugPrint("0")
+        case 1: // CBS
+            
+            playerLayer?.player?.isMuted = true
+            playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
+            
+            playerLayerCBS?.player?.isMuted = false
+            playerLayerCBS?.isHidden = false
+            guideLayerCBS?.isHidden = false
+            
+            playerLayerCNN?.player?.isMuted = true
+            playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
+            
+            playerLayerCSN?.player?.isMuted = true
+            playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
+            
+            playerLayerESPN?.player?.isMuted = true
+            playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
+            
+            playerLayerFOX?.player?.isMuted = true
+            playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
+            
+            
+        //debugPrint("1")
+        case 2: // CNN
+            playerLayer?.player?.isMuted = true
+            playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
+            
+            playerLayerCBS?.player?.isMuted = true
+            playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
+            
+            playerLayerCNN?.player?.isMuted = false
+            playerLayerCNN?.isHidden = false
+            guideLayerCNN?.isHidden = false
+            
+            playerLayerCSN?.player?.isMuted = true
+            playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
+            
+            playerLayerESPN?.player?.isMuted = true
+            playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
+            
+            playerLayerFOX?.player?.isMuted = true
+            playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
+            
+            
+        //debugPrint("2")
+        case 3: // CSN
+            playerLayer?.player?.isMuted = true
+            playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
+            
+            playerLayerCBS?.player?.isMuted = true
+            playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
+            
+            playerLayerCNN?.player?.isMuted = true
+            playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
+            
+            playerLayerCSN?.player?.isMuted = false
+            playerLayerCSN?.isHidden = false
+            guideLayerCSN?.isHidden = false
+            
+            playerLayerESPN?.player?.isMuted = true
+            playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
+            
+            playerLayerFOX?.player?.isMuted = true
+            playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
+            
+            
+        //debugPrint("3")
+        case 4: // ESPN
+            playerLayer?.player?.isMuted = true
+            playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
+            
+            playerLayerCBS?.player?.isMuted = true
+            playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
+            
+            playerLayerCNN?.player?.isMuted = true
+            playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
+            
+            playerLayerCSN?.player?.isMuted = true
+            playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
+            
+            playerLayerESPN?.player?.isMuted = false
+            playerLayerESPN?.isHidden = false
+            guideLayerESPN?.isHidden = false
+            
+            playerLayerFOX?.player?.isMuted = true
+            playerLayerFOX?.isHidden = true
+            guideLayerFOX?.isHidden = true
+            
+            
+        //debugPrint("4")
+        case 5: // FOX
+            playerLayer?.player?.isMuted = true
+            playerLayer?.isHidden = true
+            guideLayer?.isHidden = true
+            
+            playerLayerCBS?.player?.isMuted = true
+            playerLayerCBS?.isHidden = true
+            guideLayerCBS?.isHidden = true
+            
+            playerLayerCNN?.player?.isMuted = true
+            playerLayerCNN?.isHidden = true
+            guideLayerCNN?.isHidden = true
+            
+            playerLayerCSN?.player?.isMuted = true
+            playerLayerCSN?.isHidden = true
+            guideLayerCSN?.isHidden = true
+            
+            playerLayerESPN?.player?.isMuted = true
+            playerLayerESPN?.isHidden = true
+            guideLayerESPN?.isHidden = true
+            
+            playerLayerFOX?.player?.isMuted = false
+            playerLayerFOX?.isHidden = false
+            guideLayerFOX?.isHidden = false
+            
+            
+        //debugPrint("5")
+        default:
+            debugPrint("default")
+        }
     }
 
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -355,189 +546,8 @@ extension ViewController: PageViewControllerDelegate {
                             didUpdatePageIndex index: Int) {
         pageControl.currentPage = index
         
-        /*
-        switch index {
-        case 0: // AMC
-            
-            playerLayer?.player?.isMuted = false
-            playerLayer?.isHidden = false
-            guideLayer?.isHidden = false
-            
-            /*
-            // fade out after 2 seconds, then fade back in
-            UIView.animate(withDuration: 0.3, animations: {
-                self.guideView.alpha = 1.0
-                debugPrint("fade in")
-            }, completion: {
-                (finished: Bool) -> Void in
-                UIView.animate(withDuration: 0.3, delay: 2.0, animations: {
-                    self.guideView.alpha = 0.0
-                    debugPrint("fade out")
-                }, completion: nil)
-            })
- */
-            
-            playerLayerCBS?.player?.isMuted = true
-            playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
-            
-            playerLayerCNN?.player?.isMuted = true
-            playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
-            
-            playerLayerCSN?.player?.isMuted = true
-            playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
-            
-            playerLayerESPN?.player?.isMuted = true
-            playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
-            
-            playerLayerFOX?.player?.isMuted = true
-            playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
-            
-            
-            //debugPrint("0")
-        case 1: // CBS
-            
-            playerLayer?.player?.isMuted = true
-            playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
-            
-            playerLayerCBS?.player?.isMuted = false
-            playerLayerCBS?.isHidden = false
-            guideLayerCBS?.isHidden = false
-            
-            playerLayerCNN?.player?.isMuted = true
-            playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
-            
-            playerLayerCSN?.player?.isMuted = true
-            playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
-            
-            playerLayerESPN?.player?.isMuted = true
-            playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
-            
-            playerLayerFOX?.player?.isMuted = true
-            playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
-            
-            
-            //debugPrint("1")
-        case 2: // CNN
-            playerLayer?.player?.isMuted = true
-            playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
-            
-            playerLayerCBS?.player?.isMuted = true
-            playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
-            
-            playerLayerCNN?.player?.isMuted = false
-            playerLayerCNN?.isHidden = false
-            guideLayerCNN?.isHidden = false
-            
-            playerLayerCSN?.player?.isMuted = true
-            playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
-            
-            playerLayerESPN?.player?.isMuted = true
-            playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
-            
-            playerLayerFOX?.player?.isMuted = true
-            playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
-            
-            
-            //debugPrint("2")
-        case 3: // CSN
-            playerLayer?.player?.isMuted = true
-            playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
-            
-            playerLayerCBS?.player?.isMuted = true
-            playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
-            
-            playerLayerCNN?.player?.isMuted = true
-            playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
-            
-            playerLayerCSN?.player?.isMuted = false
-            playerLayerCSN?.isHidden = false
-            guideLayerCSN?.isHidden = false
-            
-            playerLayerESPN?.player?.isMuted = true
-            playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
-            
-            playerLayerFOX?.player?.isMuted = true
-            playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
-            
-            
-            //debugPrint("3")
-        case 4: // ESPN
-            playerLayer?.player?.isMuted = true
-            playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
-            
-            playerLayerCBS?.player?.isMuted = true
-            playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
-            
-            playerLayerCNN?.player?.isMuted = true
-            playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
-            
-            playerLayerCSN?.player?.isMuted = true
-            playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
-            
-            playerLayerESPN?.player?.isMuted = false
-            playerLayerESPN?.isHidden = false
-            guideLayerESPN?.isHidden = false
-            
-            playerLayerFOX?.player?.isMuted = true
-            playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
-            
-            
-            //debugPrint("4")
-        case 5: // FOX
-            playerLayer?.player?.isMuted = true
-            playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
-            
-            playerLayerCBS?.player?.isMuted = true
-            playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
-            
-            playerLayerCNN?.player?.isMuted = true
-            playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
-            
-            playerLayerCSN?.player?.isMuted = true
-            playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
-            
-            playerLayerESPN?.player?.isMuted = true
-            playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
-            
-            playerLayerFOX?.player?.isMuted = false
-            playerLayerFOX?.isHidden = false
-            guideLayerFOX?.isHidden = false
-            
-            
-            //debugPrint("5")
-        default:
-            debugPrint("default")
-        }
-        */
+        UIView.animate(withDuration: 0.3, animations: {
+            self.containerView.alpha = 1.0
+        })
     }
 }
