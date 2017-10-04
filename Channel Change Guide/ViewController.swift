@@ -8,6 +8,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var guideView: UIView!
     
+    let queue = DispatchQueue(label: "queue", attributes: .concurrent)
     
     var playerLayer: AVPlayerLayer?
     var playerLayerCBS: AVPlayerLayer?
@@ -30,7 +31,8 @@ class ViewController: UIViewController {
     
     var swipeMode = false
 
-    
+    private var pendingTask: DispatchWorkItem?
+    private var pendingTask2: DispatchWorkItem?
     
     var pageViewController: PageViewController? {
         didSet {
@@ -291,21 +293,47 @@ class ViewController: UIViewController {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         self.view.addGestureRecognizer(swipeUp)
+        
+        self.containerView.alpha = 0.0
+        
+        let taskShowGuide = DispatchWorkItem {
+            
+            self.doShowGuide()
+        }
+        
+        let taskHideGuide = DispatchWorkItem {
+            self.doHideGuide()
+        }
+        
+        pendingTask = taskShowGuide
+        pendingTask2 = taskHideGuide
     }
     
     
-    func doChannelChange(sender: UITapGestureRecognizer) {
-        
+    func doShowGuide() {
         UIView.animate(withDuration: 0.3, animations: {
-            self.containerView.alpha = 0.8
-            debugPrint("fade in")
-        }, completion: {
-            (finished: Bool) -> Void in
-            UIView.animate(withDuration: 0.3, delay: 2.0, animations: {
-                self.containerView.alpha = 0.0
-                debugPrint("fade out")
-            }, completion: nil)
-        })
+            self.containerView.alpha = 4.0
+            debugPrint("fade in final")
+        }, completion: nil)
+    }
+    
+    func doHideGuide() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.containerView.alpha = 0.0
+            debugPrint("fade out final")
+        }, completion: nil)
+    }
+    
+    func doChannelChange(sender: UITapGestureRecognizer) {
+        // show guide
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+            self.queue.async(execute: self.pendingTask!)
+        }
+        
+        // hide guide
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0) {
+            self.queue.async(execute: self.pendingTask2!)
+        }
         
         switch pageControl.currentPage {
         case 0: // AMC
@@ -315,20 +343,6 @@ class ViewController: UIViewController {
             playerLayer?.player?.isMuted = false
             playerLayer?.isHidden = false
             guideLayer?.isHidden = false
-            
-            /*
-            // fade out after 2 seconds, then fade back in
-            UIView.animate(withDuration: 0.3, animations: {
-                self.guideView.alpha = 1.0
-                debugPrint("fade in")
-            }, completion: {
-                (finished: Bool) -> Void in
-                UIView.animate(withDuration: 0.3, delay: 2.0, animations: {
-                    self.guideView.alpha = 0.0
-                    debugPrint("fade out")
-                }, completion: nil)
-            })
-            */
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
@@ -498,10 +512,33 @@ class ViewController: UIViewController {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
                 debugPrint("Swiped right")
+                
+                // show guide
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+                    self.queue.async(execute: self.pendingTask!)
+                }
+                
+                // hide guide
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0) {
+                    self.queue.async(execute: self.pendingTask2!)
+                }
+
+                
             case UISwipeGestureRecognizerDirection.down:
                 debugPrint("Swiped down")
             case UISwipeGestureRecognizerDirection.left:
                 debugPrint("Swiped left")
+                
+                // show guide
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+                    self.queue.async(execute: self.pendingTask!)
+                }
+                
+                // hide guide
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0) {
+                    self.queue.async(execute: self.pendingTask2!)
+                }
+                
             case UISwipeGestureRecognizerDirection.up:
                 debugPrint("Swiped up")
             default:
@@ -546,8 +583,5 @@ extension ViewController: PageViewControllerDelegate {
                             didUpdatePageIndex index: Int) {
         pageControl.currentPage = index
         
-        UIView.animate(withDuration: 0.3, animations: {
-            self.containerView.alpha = 1.0
-        })
     }
 }
