@@ -25,23 +25,6 @@ import AVFoundation
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.guide?.alpha = 0.0
-        //debugPrint("p1")
-        
-        /*
-        // fade out after 2 seconds, then fade back in
-        UIView.animate(withDuration: 1.5, delay: 2.0, animations: {
-            self.guide?.alpha = 0.0
-            debugPrint("p2")
-        }, completion: {
-            (finished: Bool) -> Void in
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.guide?.alpha = 1.0
-                    debugPrint("p3")
-                }, completion: nil)
-        })
-        */
-        
         let taskFadeIn = DispatchWorkItem {
       
             UIView.animate(withDuration: 1.5, animations: {
@@ -92,32 +75,6 @@ import AVFoundation
         
         triggerInput()
         
-        /*
-        UIView.animate(withDuration: 0.3, animations: {
-            self.guide?.alpha = 1.0
-            debugPrint("p6")
-        }, completion: {
-            (finished: Bool) -> Void in
-            UIView.animate(withDuration: 0.3, delay: 2.0, animations: {
-                self.guide?.alpha = 0.0
-                debugPrint("p7")
-            }, completion: nil)
-        })
-        */
-        
-        /*
-        
-        // fade in
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-            self.queue.async(execute: self.pendingTask!)
-        }
-        
-        // fade out
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-            self.queue.async(execute: self.pendingTask2!)
-        }
- 
-         */
     }
     
     func triggerInput () {
@@ -166,29 +123,4 @@ import AVFoundation
     }
     
     
-    func toggleMute() {
-        // something
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-        
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
-    }
 }

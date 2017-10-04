@@ -28,7 +28,6 @@ class ViewController: UIViewController {
     var guideLayerHBO: CALayer?
     var guideLayerHSN: CALayer?
     
-    
     var swipeMode = false
 
     private var pendingTask: DispatchWorkItem?
@@ -309,10 +308,9 @@ class ViewController: UIViewController {
         pendingTask2 = taskHideGuide
     }
     
-    
     func doShowGuide() {
         UIView.animate(withDuration: 0.3, animations: {
-            self.containerView.alpha = 4.0
+            self.containerView.alpha = 0.5
             debugPrint("fade in final")
         }, completion: nil)
     }
@@ -321,6 +319,9 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.3, animations: {
             self.containerView.alpha = 0.0
             debugPrint("fade out final")
+            
+            self.pageViewController?.scrollToViewController(index: 0)
+            
         }, completion: nil)
     }
     
@@ -501,7 +502,6 @@ class ViewController: UIViewController {
             guideLayerFOX?.isHidden = false
             
             
-            
         //debugPrint("5")
         default:
             debugPrint("default")
@@ -510,36 +510,19 @@ class ViewController: UIViewController {
 
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            // show guide
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: self.pendingTask!)
+            
+            // hide guide
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+            
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
                 debugPrint("Swiped right")
-                
-                // show guide
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-                    self.queue.async(execute: self.pendingTask!)
-                }
-                
-                // hide guide
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0) {
-                    self.queue.async(execute: self.pendingTask2!)
-                }
-
-                
             case UISwipeGestureRecognizerDirection.down:
                 debugPrint("Swiped down")
             case UISwipeGestureRecognizerDirection.left:
                 debugPrint("Swiped left")
-                
-                // show guide
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-                    self.queue.async(execute: self.pendingTask!)
-                }
-                
-                // hide guide
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0) {
-                    self.queue.async(execute: self.pendingTask2!)
-                }
-                
             case UISwipeGestureRecognizerDirection.up:
                 debugPrint("Swiped up")
             default:
