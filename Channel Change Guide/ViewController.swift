@@ -273,7 +273,7 @@ class ViewController: UIViewController {
         
         //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapBlurButton(_:)))
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.doChannelChange(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.doChannelChange(sender:)))
         self.view.addGestureRecognizer(tapGesture)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
@@ -291,23 +291,18 @@ class ViewController: UIViewController {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         self.view.addGestureRecognizer(swipeUp)
-    }
-    
-    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        for press in presses {
-            if (press.type == .select) {
-                
-                //self.doChannelChange(UITapGestureRecognizer)
-                
-            }  else {
-                super.pressesEnded(presses, with: event)
-            }
-        }
         
-    }
+        
 
+    }
     
-    func doChannelChange(_ sender: UITapGestureRecognizer) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            debugPrint("come on now")
+        }
+    }
+    
+    func doChannelChange(sender: UITapGestureRecognizer) {
         debugPrint("Please Help! is this the one?")
     }
 
