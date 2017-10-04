@@ -501,6 +501,7 @@ class ViewController: UIViewController {
             guideLayerFOX?.isHidden = false
             
             
+            
         //debugPrint("5")
         default:
             debugPrint("default")
