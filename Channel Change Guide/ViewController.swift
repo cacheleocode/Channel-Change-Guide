@@ -296,14 +296,10 @@ class ViewController: UIViewController {
 
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            debugPrint("come on now")
-        }
-    }
     
     func doChannelChange(sender: UITapGestureRecognizer) {
-        debugPrint("Please Help! is this the one?")
+        
+        debugPrint(pageControl.currentPage)
     }
 
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
