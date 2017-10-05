@@ -29,9 +29,12 @@ class ViewController: UIViewController {
     var guideLayerHSN: CALayer?
     
     var swipeMode = false
+    
+    var resetIndex = 0
 
     private var pendingTask: DispatchWorkItem?
     private var pendingTask2: DispatchWorkItem?
+    private var pendingTask3: DispatchWorkItem?
     
     var pageViewController: PageViewController? {
         didSet {
@@ -312,7 +315,13 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.3, animations: {
             self.containerView.alpha = 0.5
             debugPrint("fade in final")
-        }, completion: nil)
+        }, completion: { (finished: Bool) in
+            // something
+        })
+    }
+    
+    func doBuffer() {
+        debugPrint("waiting")
     }
     
     func doHideGuide() {
@@ -320,21 +329,51 @@ class ViewController: UIViewController {
             self.containerView.alpha = 0.0
             debugPrint("fade out final")
             
-            self.pageViewController?.scrollToViewController(index: 0)
+            self.pageViewController?.scrollToViewController(index: self.resetIndex)
             
         }, completion: nil)
     }
     
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            // show guide
+            DispatchQueue.main.async(execute: self.pendingTask!)
+            
+            // hide guide
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.right:
+                debugPrint("Swiped right")
+            case UISwipeGestureRecognizerDirection.down:
+                debugPrint("Swiped down")
+            case UISwipeGestureRecognizerDirection.left:
+                debugPrint("Swiped left")
+            case UISwipeGestureRecognizerDirection.up:
+                debugPrint("Swiped up")
+            default:
+                break
+            }
+        }
+    }
+    
     func doChannelChange(sender: UITapGestureRecognizer) {
+        
+        
+        /*
         // show guide
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
             self.queue.async(execute: self.pendingTask!)
         }
-        
+ 
+ 
         // hide guide
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0) {
             self.queue.async(execute: self.pendingTask2!)
         }
+        */
+ 
+        resetIndex = pageControl.currentPage
         
         switch pageControl.currentPage {
         case 0: // AMC
@@ -508,31 +547,6 @@ class ViewController: UIViewController {
         }
     }
 
-    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            // show guide
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: self.pendingTask!)
-            
-            // hide guide
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
-            
-            switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.right:
-                debugPrint("Swiped right")
-            case UISwipeGestureRecognizerDirection.down:
-                debugPrint("Swiped down")
-            case UISwipeGestureRecognizerDirection.left:
-                debugPrint("Swiped left")
-            case UISwipeGestureRecognizerDirection.up:
-                debugPrint("Swiped up")
-            default:
-                break
-            }
-        }
-    }
-    
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let pageViewController = segue.destination as? PageViewController {
             self.pageViewController = pageViewController
