@@ -28,8 +28,9 @@
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ztv-Nd-oEQ">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <containerView clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U86-eW-DBU">
+                            <containerView clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U86-eW-DBU">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <connections>
                                     <segue destination="A7T-Ec-iyt" kind="embed" id="NV1-3y-c0E"/>
@@ -66,7 +67,7 @@
                     </view>
                     <connections>
                         <outlet property="containerView" destination="U86-eW-DBU" id="4QV-HF-nea"/>
-                        <outlet property="guideView" destination="Ztv-Nd-oEQ" id="HX0-qe-Xaf"/>
+                        <outlet property="overlayView" destination="Ztv-Nd-oEQ" id="lDk-yE-Zxl"/>
                         <outlet property="pageControl" destination="Xvt-1d-6RY" id="FVe-8F-FO2"/>
                         <outlet property="videoView" destination="LaI-8t-do8" id="lzC-iD-KSW"/>
                     </connections>

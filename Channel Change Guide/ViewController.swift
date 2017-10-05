@@ -6,7 +6,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var guideView: UIView!
+    @IBOutlet weak var overlayView: UIView!
     
     let queue = DispatchQueue(label: "queue", attributes: .concurrent)
     
@@ -296,6 +296,8 @@ class ViewController: UIViewController {
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         self.view.addGestureRecognizer(swipeUp)
         
+        self.overlayView.alpha = 0.0
+        
         self.containerView.alpha = 0.0
         
         /*
@@ -345,8 +347,15 @@ class ViewController: UIViewController {
                 
                 self.containerView.frame.origin.x = -200
                 
+                /*
+                for subview in self.containerView.subviews {
+                    subview.frame.origin.x = -200
+                }
+                */
+                
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
+                        self.overlayView.alpha = 0.5
                         self.containerView.alpha = 0.5
                         self.containerView.frame.origin.x = 0
                     }, completion: nil)
@@ -354,6 +363,7 @@ class ViewController: UIViewController {
                 
                 pendingTask2 = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
+                        self.overlayView.alpha = 0.0
                         self.containerView.alpha = 0.0
                         self.containerView.frame.origin.x = -200
                     }, completion: { (finished: Bool) in
@@ -377,6 +387,7 @@ class ViewController: UIViewController {
                 
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
+                        self.overlayView.alpha = 0.5
                         self.containerView.alpha = 0.5
                         self.containerView.frame.origin.x = 0
                     }, completion: nil)
@@ -384,6 +395,7 @@ class ViewController: UIViewController {
                 
                 pendingTask2 = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
+                        self.overlayView.alpha = 0.0
                         self.containerView.alpha = 0.0
                         self.containerView.frame.origin.x = 200
                     }, completion: { (finished: Bool) in
