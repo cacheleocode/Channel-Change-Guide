@@ -298,6 +298,7 @@ class ViewController: UIViewController {
         
         self.containerView.alpha = 0.0
         
+        /*
         let taskShowGuide = DispatchWorkItem {
             
             self.doShowGuide()
@@ -309,6 +310,7 @@ class ViewController: UIViewController {
         
         pendingTask = taskShowGuide
         pendingTask2 = taskHideGuide
+        */
     }
     
     func doShowGuide() {
@@ -336,19 +338,65 @@ class ViewController: UIViewController {
     
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            // show guide
-            DispatchQueue.main.async(execute: self.pendingTask!)
-            
-            // hide guide
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
             
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
                 debugPrint("Swiped right")
+                
+                self.containerView.frame.origin.x = -200
+                
+                pendingTask = DispatchWorkItem {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.containerView.alpha = 0.5
+                        self.containerView.frame.origin.x = 0
+                    }, completion: nil)
+                }
+                
+                pendingTask2 = DispatchWorkItem {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.containerView.alpha = 0.0
+                        self.containerView.frame.origin.x = -200
+                    }, completion: { (finished: Bool) in
+                        self.pageViewController?.scrollToViewController(index: self.resetIndex)
+                    })
+                }
+                
+                
+                // show guide
+                DispatchQueue.main.async(execute: self.pendingTask!)
+                
+                // hide guide
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+                
             case UISwipeGestureRecognizerDirection.down:
                 debugPrint("Swiped down")
             case UISwipeGestureRecognizerDirection.left:
                 debugPrint("Swiped left")
+                
+                self.containerView.frame.origin.x = 200
+                
+                pendingTask = DispatchWorkItem {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.containerView.alpha = 0.5
+                        self.containerView.frame.origin.x = 0
+                    }, completion: nil)
+                }
+                
+                pendingTask2 = DispatchWorkItem {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.containerView.alpha = 0.0
+                        self.containerView.frame.origin.x = 200
+                    }, completion: { (finished: Bool) in
+                        self.pageViewController?.scrollToViewController(index: self.resetIndex)
+                    })
+                }
+                
+                // show guide
+                DispatchQueue.main.async(execute: self.pendingTask!)
+                
+                // hide guide
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+                
             case UISwipeGestureRecognizerDirection.up:
                 debugPrint("Swiped up")
             default:
