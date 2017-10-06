@@ -217,6 +217,10 @@ extension PageViewController: UIPageViewControllerDelegate {
                             transitionCompleted completed: Bool) {
         notifyDelegateOfNewIndex()
     }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        
+    }
 }
 
 protocol PageViewControllerDelegate: class {
