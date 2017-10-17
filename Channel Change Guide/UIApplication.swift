@@ -4,7 +4,10 @@ import UIKit
 
 class MyApplication: UIApplication {
     
+    weak var myVC: ViewController?
+    
     override func sendEvent(_ event: UIEvent) {
+        //debugPrint("global global");
         
         // Ignore .Motion and .RemoteControl event simply everything else then .Touches
         if event.type != .touches {
@@ -26,12 +29,15 @@ class MyApplication: UIApplication {
         
         if restartTimer {
             // Touches ended || cancelled, restart timer
-            //print("Touches ended. Restart timer")
+            // print("Touches ended. Restart timer")
             
-        
+            myVC?.doRestartTimer()
+            
         } else {
             // Touches in progress - !ended, !cancelled, just invalidate it
             //print("Touches in progress. Invalidate timer")
+        
+            myVC?.doInvalidateTimer()
         }
         
         super.sendEvent(event)

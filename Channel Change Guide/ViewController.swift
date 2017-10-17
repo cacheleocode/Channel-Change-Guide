@@ -32,9 +32,9 @@ class ViewController: UIViewController {
     
     var resetIndex = 0
 
-    private var pendingTask: DispatchWorkItem?
-    private var pendingTask2: DispatchWorkItem?
-    private var pendingTask3: DispatchWorkItem?
+    var pendingTask: DispatchWorkItem?
+    var pendingTask2: DispatchWorkItem?
+    var pendingTask3: DispatchWorkItem?
     
     var pageViewController: PageViewController? {
         didSet {
@@ -44,6 +44,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        (UIApplication.shared as! MyApplication).myVC = self
         
         // video player AMC
         guard let path = Bundle.main.path(forResource: "amc", ofType:"mp4") else {
@@ -61,12 +63,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 player.seek(to: kCMTimeZero)
-                player.play()
+                player.pause()
             }
         })
         
         player.isMuted = false;
-        player.play()
+        player.pause()
         
         self.videoView.layer.addSublayer(playerLayer!)
         
@@ -99,12 +101,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCBS.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCBS.seek(to: kCMTimeZero)
-                playerCBS.play()
+                playerCBS.pause()
             }
         })
         
         playerCBS.isMuted = true;
-        playerCBS.play()
+        playerCBS.pause()
         
         
         /*
@@ -136,12 +138,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCNN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCNN.seek(to: kCMTimeZero)
-                playerCNN.play()
+                playerCNN.pause()
             }
         })
         
         playerCNN.isMuted = true;
-        playerCNN.play()
+        playerCNN.pause()
         
         /*
         // guide CNN
@@ -172,12 +174,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCSN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCSN.seek(to: kCMTimeZero)
-                playerCSN.play()
+                playerCSN.pause()
             }
         })
         
         playerCSN.isMuted = true;
-        playerCSN.play()
+        playerCSN.pause()
         
         /*
         // guide CSN
@@ -208,12 +210,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerESPN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerESPN.seek(to: kCMTimeZero)
-                playerESPN.play()
+                playerESPN.pause()
             }
         })
         
         playerESPN.isMuted = true;
-        playerESPN.play()
+        playerESPN.pause()
         
         /*
         // guide ESPN
@@ -244,12 +246,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerFOX.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerFOX.seek(to: kCMTimeZero)
-                playerFOX.play()
+                playerFOX.pause()
             }
         })
         
         playerFOX.isMuted = true;
-        playerFOX.play()
+        playerFOX.pause()
         
         /*
         // guide FOX
@@ -315,6 +317,28 @@ class ViewController: UIViewController {
         */
     }
     
+    func doRestartTimer() {
+        print("restart")
+        
+        pendingTask2 = DispatchWorkItem {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.overlayView.alpha = 0.0
+                self.containerView.alpha = 0.0
+                self.containerView.frame.origin.x = -200
+            }, completion: { (finished: Bool) in
+                self.pageViewController?.scrollToViewController(index: self.resetIndex)
+            })
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+    }
+    
+    func doInvalidateTimer() {
+        print("invalidate")
+        
+        pendingTask2?.cancel()
+    }
+    
     func doShowGuide() {
         UIView.animate(withDuration: 0.3, animations: {
             self.containerView.alpha = 0.5
@@ -340,18 +364,12 @@ class ViewController: UIViewController {
     
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            
+
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
-                debugPrint("Swiped right")
+                //debugPrint("Swiped right")
                 
                 self.containerView.frame.origin.x = -200
-                
-                /*
-                for subview in self.containerView.subviews {
-                    subview.frame.origin.x = -200
-                }
-                */
                 
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
@@ -360,7 +378,7 @@ class ViewController: UIViewController {
                         self.containerView.frame.origin.x = 0
                     }, completion: nil)
                 }
-                
+
                 pendingTask2 = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
                         self.overlayView.alpha = 0.0
@@ -381,10 +399,11 @@ class ViewController: UIViewController {
             case UISwipeGestureRecognizerDirection.down:
                 debugPrint("Swiped down")
             case UISwipeGestureRecognizerDirection.left:
-                debugPrint("Swiped left")
+                //debugPrint("Swiped left")
                 
                 self.containerView.frame.origin.x = 200
                 
+                /*
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
                         self.overlayView.alpha = 0.5
@@ -402,12 +421,13 @@ class ViewController: UIViewController {
                         self.pageViewController?.scrollToViewController(index: self.resetIndex)
                     })
                 }
+                */
                 
                 // show guide
-                DispatchQueue.main.async(execute: self.pendingTask!)
+                //DispatchQueue.main.async(execute: self.pendingTask!)
                 
                 // hide guide
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+                //DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
                 
             case UISwipeGestureRecognizerDirection.up:
                 debugPrint("Swiped up")

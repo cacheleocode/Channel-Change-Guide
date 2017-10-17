@@ -2,6 +2,7 @@ import UIKit
 import AVFoundation
 
 class PageViewController: UIPageViewController {
+    
     weak var gotDelegate: PageViewControllerDelegate?
         
     var swipeMode = false
@@ -132,8 +133,6 @@ class PageViewController: UIPageViewController {
         
     }
     
-    
- 
 
     /*
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
@@ -218,9 +217,13 @@ extension PageViewController: UIPageViewControllerDelegate {
         notifyDelegateOfNewIndex()
     }
     
+    /*
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        // dev suggested here
         
+        debugPrint("real suggestion");
     }
+    */
 }
 
 protocol PageViewControllerDelegate: class {
