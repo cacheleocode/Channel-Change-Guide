@@ -30,6 +30,10 @@ class ViewController: UIViewController {
     
     var swipeMode = false
     
+    var direction = ""
+    
+    var resetOrigin: CGFloat?
+    
     var resetIndex = 0
 
     var pendingTask: DispatchWorkItem?
@@ -320,11 +324,17 @@ class ViewController: UIViewController {
     func doRestartTimer() {
         print("restart")
         
+        if (direction == "left") {
+            resetOrigin = 200
+        } else {
+            resetOrigin = -200
+        }
+        
         pendingTask2 = DispatchWorkItem {
             UIView.animate(withDuration: 0.3, animations: {
                 self.overlayView.alpha = 0.0
                 self.containerView.alpha = 0.0
-                self.containerView.frame.origin.x = -200
+                self.containerView.frame.origin.x = self.resetOrigin!
             }, completion: { (finished: Bool) in
                 self.pageViewController?.scrollToViewController(index: self.resetIndex)
             })
@@ -389,12 +399,15 @@ class ViewController: UIViewController {
                     })
                 }
                 
+                direction = "right"
+                
                 
                 // show guide
                 DispatchQueue.main.async(execute: self.pendingTask!)
                 
                 // hide guide
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+                
                 
             case UISwipeGestureRecognizerDirection.down:
                 debugPrint("Swiped down")
@@ -403,7 +416,6 @@ class ViewController: UIViewController {
                 
                 self.containerView.frame.origin.x = 200
                 
-                /*
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
                         self.overlayView.alpha = 0.5
@@ -421,13 +433,13 @@ class ViewController: UIViewController {
                         self.pageViewController?.scrollToViewController(index: self.resetIndex)
                     })
                 }
-                */
-                
                 // show guide
-                //DispatchQueue.main.async(execute: self.pendingTask!)
+                DispatchQueue.main.async(execute: self.pendingTask!)
                 
                 // hide guide
-                //DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+                
+                direction = "left"
                 
             case UISwipeGestureRecognizerDirection.up:
                 debugPrint("Swiped up")
