@@ -21,16 +21,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LaI-8t-do8">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LaI-8t-do8">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
-                            <view multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ztv-Nd-oEQ">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ztv-Nd-oEQ">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <containerView clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U86-eW-DBU">
+                            <containerView hidden="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U86-eW-DBU">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <connections>
                                     <segue destination="A7T-Ec-iyt" kind="embed" id="NV1-3y-c0E"/>
@@ -52,6 +52,13 @@
                                     <action selector="didTapNextButton:" destination="gjb-cV-ex8" eventType="touchUpInside" id="Spg-TK-xMW"/>
                                 </connections>
                             </button>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mVq-XQ-cJz" userLabel="Collection View">
+                                <rect key="frame" x="0.0" y="780" width="1920" height="300"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="Tkt-Pl-quF" kind="embed" id="Y76-ut-agd"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -66,6 +73,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="mVq-XQ-cJz" id="L5q-bi-ny2"/>
                         <outlet property="containerView" destination="U86-eW-DBU" id="4QV-HF-nea"/>
                         <outlet property="overlayView" destination="Ztv-Nd-oEQ" id="lDk-yE-Zxl"/>
                         <outlet property="pageControl" destination="Xvt-1d-6RY" id="FVe-8F-FO2"/>
@@ -80,6 +88,53 @@
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="19" y="-2613"/>
+        </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="Q5t-qZ-umv">
+            <objects>
+                <collectionViewController id="Tkt-Pl-quF" customClass="CollectionViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" dataMode="prototypes" id="EiI-Ue-OdD">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="300"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CEQ-fG-2nq">
+                            <size key="itemSize" width="309" height="229"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="0KY-c1-TLF" customClass="CollectionViewCell" customModule="Channel_Change_Guide" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="36" width="309" height="229"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="309" height="229"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" highlighted="YES" adjustsImageWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="akS-5M-HIT">
+                                            <rect key="frame" x="39" y="31" width="230" height="167"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="akS-5M-HIT" secondAttribute="trailing" id="2Ja-Ki-ITV"/>
+                                    <constraint firstItem="akS-5M-HIT" firstAttribute="leading" secondItem="0KY-c1-TLF" secondAttribute="leading" id="cmE-gA-BDc"/>
+                                    <constraint firstAttribute="bottom" secondItem="akS-5M-HIT" secondAttribute="bottom" id="g5j-yu-AHq"/>
+                                    <constraint firstItem="akS-5M-HIT" firstAttribute="top" secondItem="0KY-c1-TLF" secondAttribute="top" id="oUJ-0v-d9e"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="akS-5M-HIT" id="I7Q-G3-5XO"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Tkt-Pl-quF" id="CKq-eZ-kzb"/>
+                            <outlet property="delegate" destination="Tkt-Pl-quF" id="1hV-Hg-9Ss"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rxt-9x-BoB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3331" y="-2613"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="3Iv-Zt-2iB">

@@ -7,6 +7,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var overlayView: UIView!
+    @IBOutlet weak var channelName: UILabel!
+    @IBOutlet weak var collectionView: UIView!
+    
     
     let queue = DispatchQueue(label: "queue", attributes: .concurrent)
     
@@ -67,12 +70,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 player.seek(to: kCMTimeZero)
-                player.pause()
+                player.play()
             }
         })
         
         player.isMuted = false;
-        player.pause()
+        player.play()
         
         self.videoView.layer.addSublayer(playerLayer!)
         
@@ -105,12 +108,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCBS.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCBS.seek(to: kCMTimeZero)
-                playerCBS.pause()
+                playerCBS.play()
             }
         })
         
         playerCBS.isMuted = true;
-        playerCBS.pause()
+        playerCBS.play()
         
         
         /*
@@ -142,12 +145,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCNN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCNN.seek(to: kCMTimeZero)
-                playerCNN.pause()
+                playerCNN.play()
             }
         })
         
         playerCNN.isMuted = true;
-        playerCNN.pause()
+        playerCNN.play()
         
         /*
         // guide CNN
@@ -178,12 +181,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCSN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerCSN.seek(to: kCMTimeZero)
-                playerCSN.pause()
+                playerCSN.play()
             }
         })
         
         playerCSN.isMuted = true;
-        playerCSN.pause()
+        playerCSN.play()
         
         /*
         // guide CSN
@@ -214,12 +217,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerESPN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerESPN.seek(to: kCMTimeZero)
-                playerESPN.pause()
+                playerESPN.play()
             }
         })
         
         playerESPN.isMuted = true;
-        playerESPN.pause()
+        playerESPN.play()
         
         /*
         // guide ESPN
@@ -250,12 +253,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerFOX.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
                 playerFOX.seek(to: kCMTimeZero)
-                playerFOX.pause()
+                playerFOX.play()
             }
         })
         
         playerFOX.isMuted = true;
-        playerFOX.pause()
+        playerFOX.play()
         
         /*
         // guide FOX
@@ -306,6 +309,8 @@ class ViewController: UIViewController {
         
         self.containerView.alpha = 0.0
         
+        self.collectionView.alpha = 0.0
+        
         /*
         let taskShowGuide = DispatchWorkItem {
             
@@ -319,6 +324,7 @@ class ViewController: UIViewController {
         pendingTask = taskShowGuide
         pendingTask2 = taskHideGuide
         */
+        
     }
     
     func doRestartTimer() {
@@ -332,9 +338,9 @@ class ViewController: UIViewController {
         
         pendingTask2 = DispatchWorkItem {
             UIView.animate(withDuration: 0.3, animations: {
-                self.overlayView.alpha = 0.0
-                self.containerView.alpha = 0.0
-                self.containerView.frame.origin.x = self.resetOrigin!
+                // self.overlayView.alpha = 0.0
+                self.collectionView.alpha = 0.0
+                self.collectionView.frame.origin.x = self.resetOrigin!
             }, completion: { (finished: Bool) in
                 self.pageViewController?.scrollToViewController(index: self.resetIndex)
             })
@@ -377,23 +383,25 @@ class ViewController: UIViewController {
 
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
-                //debugPrint("Swiped right")
+                debugPrint("Swiped right")
                 
-                self.containerView.frame.origin.x = -200
+                // self.containerView.frame.origin.x = -200
+                
+                self.collectionView.frame.origin.x = -200
                 
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
-                        self.overlayView.alpha = 0.5
-                        self.containerView.alpha = 0.5
-                        self.containerView.frame.origin.x = 0
+                        // self.overlayView.alpha = 0.5
+                        self.collectionView.alpha = 0.5
+                        self.collectionView.frame.origin.x = 0
                     }, completion: nil)
                 }
 
                 pendingTask2 = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
-                        self.overlayView.alpha = 0.0
-                        self.containerView.alpha = 0.0
-                        self.containerView.frame.origin.x = -200
+                        // self.overlayView.alpha = 0.0
+                        self.collectionView.alpha = 0.0
+                        self.collectionView.frame.origin.x = -200
                     }, completion: { (finished: Bool) in
                         self.pageViewController?.scrollToViewController(index: self.resetIndex)
                     })
@@ -407,28 +415,27 @@ class ViewController: UIViewController {
                 
                 // hide guide
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
-                
-                
+ 
             case UISwipeGestureRecognizerDirection.down:
                 debugPrint("Swiped down")
             case UISwipeGestureRecognizerDirection.left:
-                //debugPrint("Swiped left")
+                debugPrint("Swiped left")
                 
-                self.containerView.frame.origin.x = 200
+                self.collectionView.frame.origin.x = 200
                 
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
-                        self.overlayView.alpha = 0.5
-                        self.containerView.alpha = 0.5
-                        self.containerView.frame.origin.x = 0
+                        // self.overlayView.alpha = 0.5
+                        self.collectionView.alpha = 0.5
+                        self.collectionView.frame.origin.x = 0
                     }, completion: nil)
                 }
                 
                 pendingTask2 = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
-                        self.overlayView.alpha = 0.0
-                        self.containerView.alpha = 0.0
-                        self.containerView.frame.origin.x = 200
+                        // self.overlayView.alpha = 0.0
+                        self.collectionView.alpha = 0.0
+                        self.collectionView.frame.origin.x = 200
                     }, completion: { (finished: Bool) in
                         self.pageViewController?.scrollToViewController(index: self.resetIndex)
                     })
