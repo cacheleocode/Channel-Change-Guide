@@ -6,12 +6,64 @@
 //  Copyright © 2017 DOMINGUEZ, LEO. All rights reserved.
 //
 
+import Foundation
 import UIKit
+
+enum LoadMoreStatus {
+    case loading
+    case finished
+    case haveMore
+}
+
 
 private let reuseIdentifier = "Cell"
 
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    var logos = [String]()
+    var channels: Array = [
+        "amc",
+        "cbs",
+        "cnn",
+        "csn",
+        "espn",
+        "fox"
+    ]
+    
+    var channelKeyarts: [UIImage] = [
+        #imageLiteral(resourceName: "keyart_amc"),
+        #imageLiteral(resourceName: "keyart_cbs"),
+        #imageLiteral(resourceName: "keyart_cnn"),
+        #imageLiteral(resourceName: "keyart_csn"),
+        #imageLiteral(resourceName: "keyart_espn"),
+        #imageLiteral(resourceName: "keyart_fox")
+    ]
+    
+    var channelLogos: [UIImage] = [
+        #imageLiteral(resourceName: "logo_amc"),
+        #imageLiteral(resourceName: "logo_cbs"),
+        #imageLiteral(resourceName: "logo_cnn"),
+        #imageLiteral(resourceName: "logo_csn"),
+        #imageLiteral(resourceName: "logo_espn"),
+        #imageLiteral(resourceName: "logo_fox")
+    ]
+    
+    var channelTitles: Array = [
+        "The Walking Dead",
+        "The Talk",
+        "State of the Union",
+        "MIL vs SAC",
+        "UCLA vs AZW",
+        "Empire"
+    ]
+    
+    var channelMetadatas: Array = [
+        "S2 E7 | The Other Side",
+        "S7 EP182 | Actress Salma Hayek",
+        "S77 E2 | Gary Johnson",
+        "2017",
+        "2017",
+        "S2 E3 | Bout that"
+    ]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +76,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
 
         // Do any additional setup after loading the view.
         
-        logos = ["logo_amc.jpg",
-                 "logo_cbs.jpg",
-                 "logo_cnn.jpg",
-                 "logo_csn.jpg",
-                 "logo_espn.jpg",
-                 "logo_fox.jpg"]
+        self.collectionView?.isScrollEnabled = false
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,21 +105,46 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return logos.count
+        return channels.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewCell
     
         // Configure the cell
-        
+        /*
         let logo = UIImage(named: logos[indexPath.row])
         
         cell.imageView.image = logo
+        */
         
+        //let itemToShow = channels[indexPath.row % channels.count]
+        // let cell = UICollectionViewCell() // setup cell with your item and return
+
+        
+        cell.keyartView.image = self.channelKeyarts[indexPath.row]
+        cell.keyartView.contentMode = .scaleAspectFit
+        
+        cell.logoView.image = self.channelLogos[indexPath.row]
+        cell.logoView.contentMode = .scaleAspectFit
+        
+        cell.titleView.text = self.channelTitles[indexPath.row]
+        
+        cell.metadataView.text = self.channelMetadatas[indexPath.row]
+     
         return cell
     }
-
+    
+    override func collectionView(_ collectionView: UICollectionView,
+                                 didUpdateFocusIn context: UICollectionViewFocusUpdateContext,
+                                 with coordinator: UIFocusAnimationCoordinator) {
+        // As we are not using the default scrollable feature from the UIScrollView we can scroll ourself to the center of the focused cell
+        
+        if ((context.nextFocusedIndexPath != nil) && !collectionView.isScrollEnabled) {
+            collectionView.scrollToItem(at: context.nextFocusedIndexPath!, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+        }
+    }
+    
     // MARK: UICollectionViewDelegate
 
     /*
@@ -104,3 +177,13 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     */
     
 }
+
+
+
+
+
+
+
+
+
+

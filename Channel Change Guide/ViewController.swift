@@ -10,7 +10,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var channelName: UILabel!
     @IBOutlet weak var collectionView: UIView!
     
-    
     let queue = DispatchQueue(label: "queue", attributes: .concurrent)
     
     var playerLayer: AVPlayerLayer?
@@ -31,7 +30,7 @@ class ViewController: UIViewController {
     var guideLayerHBO: CALayer?
     var guideLayerHSN: CALayer?
     
-    var swipeMode = false
+    var surfing = false
     
     var direction = ""
     
@@ -41,13 +40,73 @@ class ViewController: UIViewController {
 
     var pendingTask: DispatchWorkItem?
     var pendingTask2: DispatchWorkItem?
-    var pendingTask3: DispatchWorkItem?
     
     var pageViewController: PageViewController? {
         didSet {
             pageViewController?.gotDelegate = self
         }
     }
+    
+    fileprivate let cellItems = [
+        "amc",
+        "cbs",
+        "cnn",
+        "csn",
+        "espn",
+        "fox"
+    ]
+    
+    @IBOutlet weak var infiniteCollectionView: InfiniteCollectionView!
+    {
+        didSet {
+            infiniteCollectionView.backgroundColor = UIColor.white
+            infiniteCollectionView.register(UINib(nibName: "ExampleCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cellCollectionView")
+            infiniteCollectionView.infiniteDataSource = self
+            infiniteCollectionView.infiniteDelegate = self
+            infiniteCollectionView.reloadData()
+        }
+    }
+    
+    var channelKeyarts: [UIImage] = [
+        #imageLiteral(resourceName: "keyart_amc"),
+        #imageLiteral(resourceName: "keyart_cbs"),
+        #imageLiteral(resourceName: "keyart_cnn"),
+        #imageLiteral(resourceName: "keyart_csn"),
+        #imageLiteral(resourceName: "keyart_espn"),
+        #imageLiteral(resourceName: "keyart_fox")
+    ]
+    
+    var channelLogos: [UIImage] = [
+        #imageLiteral(resourceName: "logo_amc"),
+        #imageLiteral(resourceName: "logo_cbs"),
+        #imageLiteral(resourceName: "logo_cnn"),
+        #imageLiteral(resourceName: "logo_csn"),
+        #imageLiteral(resourceName: "logo_espn"),
+        #imageLiteral(resourceName: "logo_fox")
+    ]
+    
+    var logoImages: [UIImage] = [#imageLiteral(resourceName: "logo_amc"),#imageLiteral(resourceName: "logo_cbs"),#imageLiteral(resourceName: "logo_cnn"),#imageLiteral(resourceName: "logo_csn"),#imageLiteral(resourceName: "logo_espn"),#imageLiteral(resourceName: "logo_fox")]
+    
+    var channelTitle: Array = [
+        "The Walking Dead",
+        "The Talk",
+        "State of the Union",
+        "MIL vs SAC",
+        "UCLA vs AZW",
+        "Empire"
+    ]
+    
+    var channelDescription: Array = [
+        "S2 E7 | The Other Side",
+        "S7 EP182 | Actress Salma Hayek",
+        "S77 E2 | Gary Johnson",
+        "2017",
+        "2017",
+        "S2 E3 | Bout that"
+    ]
+    
+    var randomNum: UInt32?
+    var someInt: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,17 +138,6 @@ class ViewController: UIViewController {
         
         self.videoView.layer.addSublayer(playerLayer!)
         
-        /*
-        // guide AMC
-        guideLayer = CALayer()
-        guideLayer?.contents = UIImage(named: "guide0")?.cgImage
-        guideLayer?.contentsGravity = kCAGravityResizeAspectFill
-        guideLayer!.frame = self.guideView.frame
-        guideLayer?.isHidden = true
-        
-        self.guideView.layer.addSublayer(guideLayer!)
-        */
- 
         // video player CBS
         guard let pathCBS = Bundle.main.path(forResource: "cbs", ofType:"mp4") else {
             debugPrint("video not found")
@@ -114,18 +162,6 @@ class ViewController: UIViewController {
         
         playerCBS.isMuted = true;
         playerCBS.play()
-        
-        
-        /*
-        // guide CBS
-        guideLayerCBS = CALayer()
-        guideLayerCBS?.contents = UIImage(named: "guide1")?.cgImage
-        guideLayerCBS?.contentsGravity = kCAGravityResizeAspectFill
-        guideLayerCBS!.frame = self.guideView.frame
-        guideLayerCBS?.isHidden = true
-        
-        self.guideView.layer.addSublayer(guideLayerCBS!)
-        */
  
         // video player CNN
         guard let pathCNN = Bundle.main.path(forResource: "cnn", ofType:"mp4") else {
@@ -152,17 +188,6 @@ class ViewController: UIViewController {
         playerCNN.isMuted = true;
         playerCNN.play()
         
-        /*
-        // guide CNN
-        guideLayerCNN = CALayer()
-        guideLayerCNN?.contents = UIImage(named: "guide2")?.cgImage
-        guideLayerCNN?.contentsGravity = kCAGravityResizeAspectFill
-        guideLayerCNN!.frame = self.guideView.frame
-        guideLayerCNN?.isHidden = true
-        
-        self.guideView.layer.addSublayer(guideLayerCNN!)
-        */
- 
         // video player CSN
         guard let pathCSN = Bundle.main.path(forResource: "csn", ofType:"mp4") else {
             debugPrint("video not found")
@@ -188,17 +213,6 @@ class ViewController: UIViewController {
         playerCSN.isMuted = true;
         playerCSN.play()
         
-        /*
-        // guide CSN
-        guideLayerCSN = CALayer()
-        guideLayerCSN?.contents = UIImage(named: "guide3")?.cgImage
-        guideLayerCSN?.contentsGravity = kCAGravityResizeAspectFill
-        guideLayerCSN!.frame = self.guideView.frame
-        guideLayerCSN?.isHidden = true
-        
-        self.guideView.layer.addSublayer(guideLayerCSN!)
-        */
- 
         // video player ESPN
         guard let pathESPN = Bundle.main.path(forResource: "espn", ofType:"mp4") else {
             debugPrint("video not found")
@@ -224,17 +238,6 @@ class ViewController: UIViewController {
         playerESPN.isMuted = true;
         playerESPN.play()
         
-        /*
-        // guide ESPN
-        guideLayerESPN = CALayer()
-        guideLayerESPN?.contents = UIImage(named: "guide4")?.cgImage
-        guideLayerESPN?.contentsGravity = kCAGravityResizeAspectFill
-        guideLayerESPN!.frame = self.guideView.frame
-        guideLayerESPN?.isHidden = true
-        
-        self.guideView.layer.addSublayer(guideLayerESPN!)
-        */
- 
         // video player FOX
         guard let pathFOX = Bundle.main.path(forResource: "fox", ofType:"mp4") else {
             debugPrint("video not found")
@@ -259,33 +262,13 @@ class ViewController: UIViewController {
         
         playerFOX.isMuted = true;
         playerFOX.play()
-        
-        /*
-        // guide FOX
-        guideLayerFOX = CALayer()
-        guideLayerFOX?.contents = UIImage(named: "guide5")?.cgImage
-        guideLayerFOX?.contentsGravity = kCAGravityResizeAspectFill
-        guideLayerFOX!.frame = self.guideView.frame
-        guideLayerFOX?.isHidden = true
- 
-        self.guideView.layer.addSublayer(guideLayerFOX!)
-        */
-        
-        
+
         // add target
         
         pageControl.addTarget(self, action: #selector(ViewController.didChangePageControlValue), for: .valueChanged)
         
-        //pageControl.addTarget(self, action: #selector(ViewController.doChannelChange), for: .allTouchEvents)
-    
-        //pageControl.addTarget(self, action: #selector(self.doChannelChange(_:)), for: .touchUpInside)
-
         // swipe detection
         
-        //let tap = UITapGestureRecognizer(target: self, action: #selector(self.respondToTa))
-        
-        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapBlurButton(_:)))
-
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.doChannelChange(sender:)))
         self.view.addGestureRecognizer(tapGesture)
         
@@ -305,31 +288,30 @@ class ViewController: UIViewController {
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         self.view.addGestureRecognizer(swipeUp)
         
+        let gradient = CAGradientLayer()
+
+        gradient.frame.size = CGSize(width: 1920, height: 600)
+        gradient.colors = [UIColor.black.withAlphaComponent(0.5), UIColor.black.cgColor]
+        gradient.locations = [0.0, 0.3]
+        
+        self.collectionView.layer.insertSublayer(gradient, at: 0)
+        
+        // initial appearance
+        
+        // Overlay View
         self.overlayView.alpha = 0.0
         
-        self.containerView.alpha = 0.0
-        
+        // Collection View
+        self.collectionView.isHidden = false
         self.collectionView.alpha = 0.0
         
-        /*
-        let taskShowGuide = DispatchWorkItem {
-            
-            self.doShowGuide()
-        }
-        
-        let taskHideGuide = DispatchWorkItem {
-            self.doHideGuide()
-        }
-        
-        pendingTask = taskShowGuide
-        pendingTask2 = taskHideGuide
-        */
-        
+        // Container View
+        self.containerView.isHidden = true
+        self.containerView.alpha = 0.0
     }
     
     func doRestartTimer() {
-        print("restart")
-        
+        /*
         if (direction == "left") {
             resetOrigin = 200
         } else {
@@ -347,12 +329,44 @@ class ViewController: UIViewController {
         }
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
+        */
+        
+        pendingTask2 = DispatchWorkItem {
+            self.doHide()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(6000), execute: self.pendingTask2!)
     }
     
     func doInvalidateTimer() {
-        print("invalidate")
-        
         pendingTask2?.cancel()
+    }
+    
+    func doShow(index: Int) {
+        if (self.containerView.isHidden) { // show preview
+            pendingTask = DispatchWorkItem {
+                self.surfing = true
+                
+                // animate preview in
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.collectionView?.alpha = 1.0
+                }, completion: nil)
+            }
+            
+            DispatchQueue.main.async(execute: self.pendingTask!)
+        } else { // show channel
+            // animate tuning to channel
+            UIView.animate(withDuration: 0.3, animations: {
+                
+                self.collectionView?.alpha = 0.0
+                
+                self.collectionView.isHidden = false
+                
+                self.containerView.isHidden = false
+                self.containerView.alpha = 1.0
+                
+            }, completion: nil)
+        }
     }
     
     func doShowGuide() {
@@ -364,8 +378,20 @@ class ViewController: UIViewController {
         })
     }
     
-    func doBuffer() {
-        debugPrint("waiting")
+    func doHide() {
+        // reset channel
+        self.pageViewController?.scrollToViewController(index: self.resetIndex)
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.collectionView.alpha = 0.0
+            
+            self.containerView.alpha = 0.0
+        }, completion: { (finished: Bool) in
+            self.surfing = false
+            
+            self.containerView.isHidden = true
+            
+        })
     }
     
     func doHideGuide() {
@@ -378,16 +404,25 @@ class ViewController: UIViewController {
         }, completion: nil)
     }
     
+    func respondToTapGesture(gesture: UITapGestureRecognizer) {
+        if (self.containerView.alpha == 0.0) { // neutral
+            // nothing
+        } else {
+            // self.doShow(index: self.nextIndex!)
+        }
+    }
+    
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
 
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
+                /*
                 debugPrint("Swiped right")
                 
                 // self.containerView.frame.origin.x = -200
                 
-                self.collectionView.frame.origin.x = -200
+                //self.collectionView.frame.origin.x = -200
                 
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
@@ -401,7 +436,7 @@ class ViewController: UIViewController {
                     UIView.animate(withDuration: 0.3, animations: {
                         // self.overlayView.alpha = 0.0
                         self.collectionView.alpha = 0.0
-                        self.collectionView.frame.origin.x = -200
+                        //self.collectionView.frame.origin.x = -200
                     }, completion: { (finished: Bool) in
                         self.pageViewController?.scrollToViewController(index: self.resetIndex)
                     })
@@ -415,13 +450,19 @@ class ViewController: UIViewController {
                 
                 // hide guide
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
- 
+                */
+                
+                direction = "right"
+                
+                self.doShow(index: self.resetIndex)
+                
             case UISwipeGestureRecognizerDirection.down:
                 debugPrint("Swiped down")
             case UISwipeGestureRecognizerDirection.left:
+                /*
                 debugPrint("Swiped left")
                 
-                self.collectionView.frame.origin.x = 200
+                //self.collectionView.frame.origin.x = 200
                 
                 pendingTask = DispatchWorkItem {
                     UIView.animate(withDuration: 0.3, animations: {
@@ -435,7 +476,7 @@ class ViewController: UIViewController {
                     UIView.animate(withDuration: 0.3, animations: {
                         // self.overlayView.alpha = 0.0
                         self.collectionView.alpha = 0.0
-                        self.collectionView.frame.origin.x = 200
+                        //self.collectionView.frame.origin.x = 200
                     }, completion: { (finished: Bool) in
                         self.pageViewController?.scrollToViewController(index: self.resetIndex)
                     })
@@ -447,6 +488,11 @@ class ViewController: UIViewController {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
                 
                 direction = "left"
+                */
+                
+                direction = "left"
+                
+                self.doShow(index: self.resetIndex)
                 
             case UISwipeGestureRecognizerDirection.up:
                 debugPrint("Swiped up")
@@ -456,29 +502,11 @@ class ViewController: UIViewController {
         }
     }
     
-    func doChannelChange(sender: UITapGestureRecognizer) {
-        
-        
-        /*
-        // show guide
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-            self.queue.async(execute: self.pendingTask!)
-        }
- 
- 
-        // hide guide
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0) {
-            self.queue.async(execute: self.pendingTask2!)
-        }
-        */
- 
+    func doChannelChange(sender: UITapGestureRecognizer? = nil) {
         resetIndex = pageControl.currentPage
         
         switch pageControl.currentPage {
         case 0: // AMC
-            
-            
-            
             playerLayer?.player?.isMuted = false
             playerLayer?.isHidden = false
             guideLayer?.isHidden = false
@@ -503,10 +531,7 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
             
-            
-        //debugPrint("0")
         case 1: // CBS
-            
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
             guideLayer?.isHidden = true
@@ -530,9 +555,7 @@ class ViewController: UIViewController {
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
-            
-            
-        //debugPrint("1")
+        
         case 2: // CNN
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
@@ -558,8 +581,6 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
             
-            
-        //debugPrint("2")
         case 3: // CSN
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
@@ -585,8 +606,6 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
             
-            
-        //debugPrint("3")
         case 4: // ESPN
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
@@ -612,8 +631,6 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
             
-            
-        //debugPrint("4")
         case 5: // FOX
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
@@ -639,8 +656,6 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = false
             guideLayerFOX?.isHidden = false
             
-            
-        //debugPrint("5")
         default:
             debugPrint("default")
         }
@@ -656,16 +671,16 @@ class ViewController: UIViewController {
         pageViewController?.scrollToNextViewController()
     }
     
-    /**
-     Fired when the user taps on the pageControl to change its current page.
-     */
+    // Fired when the user taps on the pageControl to change its current page
+    
     func didChangePageControlValue() {
         pageViewController?.scrollToViewController(index: pageControl.currentPage)
     }
     
-    
-    @IBAction func didSwipe(_ sender: Any) {
-        debugPrint("in deep")
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        if(presses.first?.type == UIPressType.menu) {
+            self.doHide()
+        }
     }
 }
 
@@ -682,3 +697,51 @@ extension ViewController: PageViewControllerDelegate {
         
     }
 }
+
+extension ViewController: InfiniteCollectionViewDataSource
+{
+    func numberOfItems(_ collectionView: UICollectionView) -> Int
+    {
+        return cellItems.count
+    }
+    
+    func cellForItemAtIndexPath(_ collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)  -> UICollectionViewCell
+    {
+        let cell = infiniteCollectionView.dequeueReusableCell(withReuseIdentifier: "cellCollectionView", for: dequeueIndexPath) as! ExampleCollectionViewCell
+        cell.lbTitle.text = cellItems[usableIndexPath.row]
+        cell.backgroundImage.image = UIImage(named: "cell-1")
+        return cell
+    }
+}
+
+extension ViewController: InfiniteCollectionViewDelegate
+{
+    func didSelectCellAtIndexPath(_ collectionView: UICollectionView, usableIndexPath: IndexPath)
+    {
+        print("Selected cell with name \(cellItems[usableIndexPath.row])")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

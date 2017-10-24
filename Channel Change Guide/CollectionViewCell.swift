@@ -9,7 +9,8 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
-    
-    
+    @IBOutlet weak var keyartView: UIImageView!
+    @IBOutlet weak var titleView: UILabel!
+    @IBOutlet weak var logoView: UIImageView!
+    @IBOutlet weak var metadataView: UILabel!
 }

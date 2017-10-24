@@ -59,6 +59,27 @@
                                     <segue destination="Tkt-Pl-quF" kind="embed" id="Y76-ut-agd"/>
                                 </connections>
                             </containerView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="P8F-lL-bqy" customClass="InfiniteCollectionView" customModule="Channel_Change_Guide" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="680" width="1920" height="400"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="L8b-UP-fdI">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" id="4tu-aV-usW">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -75,6 +96,7 @@
                     <connections>
                         <outlet property="collectionView" destination="mVq-XQ-cJz" id="L5q-bi-ny2"/>
                         <outlet property="containerView" destination="U86-eW-DBU" id="4QV-HF-nea"/>
+                        <outlet property="infiniteCollectionView" destination="P8F-lL-bqy" id="IXP-Xa-PX5"/>
                         <outlet property="overlayView" destination="Ztv-Nd-oEQ" id="lDk-yE-Zxl"/>
                         <outlet property="pageControl" destination="Xvt-1d-6RY" id="FVe-8F-FO2"/>
                         <outlet property="videoView" destination="LaI-8t-do8" id="lzC-iD-KSW"/>
@@ -93,36 +115,52 @@
         <scene sceneID="Q5t-qZ-umv">
             <objects>
                 <collectionViewController id="Tkt-Pl-quF" customClass="CollectionViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" dataMode="prototypes" id="EiI-Ue-OdD">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleAspectFit" scrollEnabled="NO" pagingEnabled="YES" dataMode="prototypes" id="EiI-Ue-OdD">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CEQ-fG-2nq">
-                            <size key="itemSize" width="309" height="229"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="100" id="CEQ-fG-2nq">
+                            <size key="itemSize" width="600" height="250"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="0KY-c1-TLF" customClass="CollectionViewCell" customModule="Channel_Change_Guide" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="36" width="309" height="229"/>
+                            <collectionViewCell autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="Cell" id="0KY-c1-TLF" customClass="CollectionViewCell" customModule="Channel_Change_Guide" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="25" width="600" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="309" height="229"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" highlighted="YES" adjustsImageWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="akS-5M-HIT">
-                                            <rect key="frame" x="39" y="31" width="230" height="167"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keyart_csn" translatesAutoresizingMaskIntoConstraints="NO" id="iQ0-7M-tlb">
+                                            <rect key="frame" x="20" y="20" width="273" height="187"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo_cbs" translatesAutoresizingMaskIntoConstraints="NO" id="Maa-dV-vv1">
+                                            <rect key="frame" x="407" y="23" width="133" height="58"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50o-Qe-Sdl">
+                                            <rect key="frame" x="406" y="127" width="343" height="46"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fh-3g-8gY">
+                                            <rect key="frame" x="406" y="188" width="343" height="46"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </view>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="akS-5M-HIT" secondAttribute="trailing" id="2Ja-Ki-ITV"/>
-                                    <constraint firstItem="akS-5M-HIT" firstAttribute="leading" secondItem="0KY-c1-TLF" secondAttribute="leading" id="cmE-gA-BDc"/>
-                                    <constraint firstAttribute="bottom" secondItem="akS-5M-HIT" secondAttribute="bottom" id="g5j-yu-AHq"/>
-                                    <constraint firstItem="akS-5M-HIT" firstAttribute="top" secondItem="0KY-c1-TLF" secondAttribute="top" id="oUJ-0v-d9e"/>
-                                </constraints>
                                 <connections>
-                                    <outlet property="imageView" destination="akS-5M-HIT" id="I7Q-G3-5XO"/>
+                                    <outlet property="keyartView" destination="iQ0-7M-tlb" id="ALa-UI-oTj"/>
+                                    <outlet property="logoView" destination="Maa-dV-vv1" id="w5s-Po-bL7"/>
+                                    <outlet property="metadataView" destination="7fh-3g-8gY" id="FBL-dq-dxh"/>
+                                    <outlet property="titleView" destination="50o-Qe-Sdl" id="4L4-ig-XOY"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -570,6 +608,8 @@
         <image name="guide3" width="1920" height="1080"/>
         <image name="guide4" width="1920" height="1080"/>
         <image name="guide5" width="1920" height="1080"/>
+        <image name="keyart_csn" width="1920" height="1080"/>
+        <image name="logo_cbs" width="56" height="55"/>
         <image name="peek" width="433" height="1080"/>
     </resources>
 </document>
