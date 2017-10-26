@@ -59,7 +59,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var infiniteCollectionView: InfiniteCollectionView!
     {
         didSet {
-            infiniteCollectionView.backgroundColor = UIColor.white
             infiniteCollectionView.register(UINib(nibName: "ExampleCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cellCollectionView")
             infiniteCollectionView.infiniteDataSource = self
             infiniteCollectionView.infiniteDelegate = self
@@ -302,12 +301,26 @@ class ViewController: UIViewController {
         self.overlayView.alpha = 0.0
         
         // Collection View
-        self.collectionView.isHidden = false
         self.collectionView.alpha = 0.0
         
         // Container View
-        self.containerView.isHidden = true
         self.containerView.alpha = 0.0
+        
+        // Page View Controller
+        self.pageViewController?.view.frame = CGRect(x: 0, y: 0, width: 1920, height: 1080)
+        self.pageViewController?.view.bounds = CGRect(x: 0, y: 600, width: 1000, height: 500)
+        self.pageViewController?.view.clipsToBounds = false
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // [self.collectionView scrollToItemAtIndexPath:self.indexPathFromVC atScrollPosition:UICollectionViewScrollPositionNone animated:NO]
     }
     
     func doRestartTimer() {
@@ -388,9 +401,6 @@ class ViewController: UIViewController {
             self.containerView.alpha = 0.0
         }, completion: { (finished: Bool) in
             self.surfing = false
-            
-            self.containerView.isHidden = true
-            
         })
     }
     
@@ -709,7 +719,7 @@ extension ViewController: InfiniteCollectionViewDataSource
     {
         let cell = infiniteCollectionView.dequeueReusableCell(withReuseIdentifier: "cellCollectionView", for: dequeueIndexPath) as! ExampleCollectionViewCell
         cell.lbTitle.text = cellItems[usableIndexPath.row]
-        cell.backgroundImage.image = UIImage(named: "cell-1")
+        // cell.backgroundImage.image = UIImage(named: "cell-1")
         return cell
     }
 }
@@ -718,7 +728,7 @@ extension ViewController: InfiniteCollectionViewDelegate
 {
     func didSelectCellAtIndexPath(_ collectionView: UICollectionView, usableIndexPath: IndexPath)
     {
-        print("Selected cell with name \(cellItems[usableIndexPath.row])")
+        debugPrint("Selected cell with name \(cellItems[usableIndexPath.row])")
     }
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D632EED1F9FF4CB00C13033 /* ExampleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D632EEC1F9FF4CB00C13033 /* ExampleCollectionViewCell.xib */; };
 		8D856A3E1F96725B00E57C81 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D856A3C1F96725B00E57C81 /* CollectionViewController.swift */; };
 		8D856A3F1F96725B00E57C81 /* CollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D856A3D1F96725B00E57C81 /* CollectionViewController.xib */; };
 		8D856A421F96784100E57C81 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D856A401F96784100E57C81 /* CollectionViewCell.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D632EEC1F9FF4CB00C13033 /* ExampleCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExampleCollectionViewCell.xib; path = ../ExampleCollectionViewCell.xib; sourceTree = "<group>"; };
 		8D856A3C1F96725B00E57C81 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		8D856A3D1F96725B00E57C81 /* CollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewController.xib; sourceTree = "<group>"; };
 		8D856A401F96784100E57C81 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				8DF81C2F1F7AD4120017461B /* Main.storyboard */,
 				8D856A411F96784100E57C81 /* CollectionViewCell.xib */,
 				8D856A3D1F96725B00E57C81 /* CollectionViewController.xib */,
+				8D632EEC1F9FF4CB00C13033 /* ExampleCollectionViewCell.xib */,
 				8DF81C321F7AD4120017461B /* Assets.xcassets */,
 				8DF81C341F7AD4120017461B /* Info.plist */,
 				8DF81C2B1F7AD4110017461B /* AppDelegate.swift */,
@@ -180,6 +183,7 @@
 				8D856A431F96784100E57C81 /* CollectionViewCell.xib in Resources */,
 				8DF81C421F7AD63E0017461B /* amc.mp4 in Resources */,
 				8DF81C431F7AD63E0017461B /* cbs.mp4 in Resources */,
+				8D632EED1F9FF4CB00C13033 /* ExampleCollectionViewCell.xib in Resources */,
 				8DF81C441F7AD63E0017461B /* cnn.mp4 in Resources */,
 				8D856A3F1F96725B00E57C81 /* CollectionViewController.xib in Resources */,
 				8DF81C451F7AD63E0017461B /* csn.mp4 in Resources */,

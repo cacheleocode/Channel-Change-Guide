@@ -19,51 +19,62 @@ enum LoadMoreStatus {
 private let reuseIdentifier = "Cell"
 
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    var channels: Array = [
+    
+    
+    let channelArrays = Array(repeating: [
         "amc",
         "cbs",
         "cnn",
         "csn",
         "espn",
         "fox"
-    ]
+        ], count: 5)
     
-    var channelKeyarts: [UIImage] = [
-        #imageLiteral(resourceName: "keyart_amc"),
-        #imageLiteral(resourceName: "keyart_cbs"),
-        #imageLiteral(resourceName: "keyart_cnn"),
-        #imageLiteral(resourceName: "keyart_csn"),
-        #imageLiteral(resourceName: "keyart_espn"),
-        #imageLiteral(resourceName: "keyart_fox")
-    ]
+    var channels = [String]()
     
-    var channelLogos: [UIImage] = [
-        #imageLiteral(resourceName: "logo_amc"),
-        #imageLiteral(resourceName: "logo_cbs"),
-        #imageLiteral(resourceName: "logo_cnn"),
-        #imageLiteral(resourceName: "logo_csn"),
-        #imageLiteral(resourceName: "logo_espn"),
-        #imageLiteral(resourceName: "logo_fox")
-    ]
+    let channelKeyartArrays = Array(repeating: [
+        "keyart_amc",
+        "keyart_cbs",
+        "keyart_cnn",
+        "keyart_csn",
+        "keyart_espn",
+        "keyart_fox"
+        ], count: 5)
     
-    var channelTitles: Array = [
+    var channelKeyarts = [String]()
+    
+    let channelLogoArrays = Array(repeating: [
+        "logo_amc",
+        "logo_cbs",
+        "logo_cnn",
+        "logo_csn",
+        "logo_espn",
+        "logo_fox"
+        ], count: 5)
+    
+    var channelLogos = [String]()
+    
+    var channelTitleArrays = Array(repeating: [
         "The Walking Dead",
         "The Talk",
         "State of the Union",
         "MIL vs SAC",
         "UCLA vs AZW",
         "Empire"
-    ]
+    ], count: 5)
     
-    var channelMetadatas: Array = [
+    var channelTitles = [String]()
+    
+    var channelMetadataArrays = Array(repeating: [
         "S2 E7 | The Other Side",
         "S7 EP182 | Actress Salma Hayek",
         "S77 E2 | Gary Johnson",
         "2017",
         "2017",
         "S2 E3 | Bout that"
-    ]
+    ], count: 5)
     
+    var channelMetadatas = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,9 +88,31 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         // Do any additional setup after loading the view.
         
         self.collectionView?.isScrollEnabled = false
-
+        
+        for array in channelArrays {
+            channels += array
+        }
+        
+        for array in channelKeyartArrays {
+            channelKeyarts += array
+        }
+        
+        for array in channelLogoArrays {
+            channelLogos += array
+        }
+        
+        for array in channelTitleArrays {
+            channelTitles += array
+        }
+        
+        for array in channelMetadataArrays {
+            channelMetadatas += array
+        }
+        
+        self.collectionView?.scrollToItem(at:IndexPath(item: channels.count / 2, section: 0), at: .right, animated: false)
     }
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -105,6 +138,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
+        debugPrint(channels.count)
         return channels.count
     }
 
@@ -120,17 +154,21 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         //let itemToShow = channels[indexPath.row % channels.count]
         // let cell = UICollectionViewCell() // setup cell with your item and return
-
         
-        cell.keyartView.image = self.channelKeyarts[indexPath.row]
+        // cell.keyartView.image = self.channelKeyarts[indexPath.row]
+        cell.keyartView.image = UIImage(named: String(describing: self.channelKeyarts[indexPath.row]))
         cell.keyartView.contentMode = .scaleAspectFit
         
-        cell.logoView.image = self.channelLogos[indexPath.row]
+        
+        // cell.logoView.image = self.channelLogos[indexPath.row]
+        cell.logoView.image = UIImage(named: String(describing: self.channelLogos[indexPath.row]))
         cell.logoView.contentMode = .scaleAspectFit
         
-        cell.titleView.text = self.channelTitles[indexPath.row]
+        // cell.titleView.text = self.channelTitles[indexPath.row]
+        cell.titleView.text = String(describing: self.channelTitles[indexPath.row])
         
-        cell.metadataView.text = self.channelMetadatas[indexPath.row]
+        // cell.metadataView.text = self.channelMetadatas[indexPath.row]
+        cell.metadataView.text = String(describing: self.channelMetadatas[indexPath.row])
      
         return cell
     }
