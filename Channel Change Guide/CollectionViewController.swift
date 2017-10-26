@@ -28,7 +28,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         "csn",
         "espn",
         "fox"
-        ], count: 5)
+        ], count: 50)
     
     var channels = [String]()
     
@@ -39,7 +39,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         "keyart_csn",
         "keyart_espn",
         "keyart_fox"
-        ], count: 5)
+        ], count: 50)
     
     var channelKeyarts = [String]()
     
@@ -50,7 +50,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         "logo_csn",
         "logo_espn",
         "logo_fox"
-        ], count: 5)
+        ], count: 50)
     
     var channelLogos = [String]()
     
@@ -61,7 +61,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         "MIL vs SAC",
         "UCLA vs AZW",
         "Empire"
-    ], count: 5)
+    ], count: 50)
     
     var channelTitles = [String]()
     
@@ -72,7 +72,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         "2017",
         "2017",
         "S2 E3 | Bout that"
-    ], count: 5)
+    ], count: 50)
     
     var channelMetadatas = [String]()
     
@@ -109,7 +109,19 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             channelMetadatas += array
         }
         
-        self.collectionView?.scrollToItem(at:IndexPath(item: channels.count / 2, section: 0), at: .right, animated: false)
+        // self.collectionView?.scrollToItem(at:IndexPath(item: (channels.count / 2) - 1, section: 0), at: .right, animated: false)
+        
+        // self.collectionView?.scrollToItem(at: IndexPath(item: 149, section: 0), at: .centeredHorizontally, animated: true)
+        
+        /*
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let width = UIScreen.main.bounds.width
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        layout.itemSize = CGSize(width: width / 5, height: width / 5)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        collectionView!.collectionViewLayout = layout
+        */
     }
     
     
@@ -169,6 +181,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         // cell.metadataView.text = self.channelMetadatas[indexPath.row]
         cell.metadataView.text = String(describing: self.channelMetadatas[indexPath.row])
+        
+        cell.alpha = 0.4
      
         return cell
     }
@@ -178,9 +192,40 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                                  with coordinator: UIFocusAnimationCoordinator) {
         // As we are not using the default scrollable feature from the UIScrollView we can scroll ourself to the center of the focused cell
         
-        if ((context.nextFocusedIndexPath != nil) && !collectionView.isScrollEnabled) {
+        if ((context.nextFocusedIndexPath != nil) && !collectionView.isScrollEnabled) {  
             collectionView.scrollToItem(at: context.nextFocusedIndexPath!, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+        
+            // collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.frame = CGRect(x: 0, y: 0, width: 990, height: 500)
         }
+        
+        if (context.previouslyFocusedIndexPath != nil) {
+            
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.alpha = 0.4
+                // collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                
+            }, completion: nil)
+        }
+        
+        if (context.nextFocusedIndexPath != nil) {
+            UIView.animate(withDuration: 0.3, animations: {
+                collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.alpha = 1.0
+                // collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                
+            }, completion: nil)
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.collectionView?.scrollToItem(at: IndexPath(row: 149, section: 0), at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
+        debugPrint("didappear")
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        debugPrint("did select")
     }
     
     // MARK: UICollectionViewDelegate
@@ -215,6 +260,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     */
     
 }
+
+
 
 
 

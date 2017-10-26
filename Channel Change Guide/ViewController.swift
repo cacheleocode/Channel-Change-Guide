@@ -1,6 +1,8 @@
 import UIKit
 import AVFoundation
 
+private let pizza = "cheese"
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var videoView: UIView!
@@ -268,6 +270,7 @@ class ViewController: UIViewController {
         
         // swipe detection
         
+        /*
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.doChannelChange(sender:)))
         self.view.addGestureRecognizer(tapGesture)
         
@@ -286,7 +289,8 @@ class ViewController: UIViewController {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         self.view.addGestureRecognizer(swipeUp)
-        
+        */
+ 
         let gradient = CAGradientLayer()
 
         gradient.frame.size = CGSize(width: 1920, height: 600)
@@ -353,6 +357,8 @@ class ViewController: UIViewController {
     
     func doInvalidateTimer() {
         pendingTask2?.cancel()
+        
+        self.doShow(index: self.resetIndex)
     }
     
     func doShow(index: Int) {
@@ -688,9 +694,21 @@ class ViewController: UIViewController {
     }
     
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        
+        for press in presses {
+            switch press.type {
+            case .menu:
+                self.doHide()
+            default:
+                super.pressesEnded(presses, with: event)
+            }
+        }
+        
+        /*
         if(presses.first?.type == UIPressType.menu) {
             self.doHide()
         }
+        */
     }
 }
 
