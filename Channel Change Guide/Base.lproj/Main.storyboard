@@ -25,72 +25,79 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ztv-Nd-oEQ">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XUH-6K-xbs">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <collectionView contentMode="scaleAspectFit" fixedFrame="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EiI-Ue-OdD">
+                                <rect key="frame" x="0.0" y="830" width="1920" height="250"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="100" id="CEQ-fG-2nq">
+                                    <size key="itemSize" width="800" height="250"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" contentMode="scaleAspectFit" reuseIdentifier="Cell" id="0KY-c1-TLF" customClass="CollectionViewCell" customModule="Channel_Change_Guide" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="800" height="250"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="800" height="250"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keyart_csn" adjustsImageWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iQ0-7M-tlb">
+                                                    <rect key="frame" x="20" y="20" width="273" height="187"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo_cbs" translatesAutoresizingMaskIntoConstraints="NO" id="Maa-dV-vv1">
+                                                    <rect key="frame" x="407" y="23" width="133" height="58"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50o-Qe-Sdl">
+                                                    <rect key="frame" x="406" y="127" width="343" height="46"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fh-3g-8gY">
+                                                    <rect key="frame" x="406" y="188" width="343" height="46"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <connections>
+                                            <outlet property="keyartView" destination="iQ0-7M-tlb" id="ALa-UI-oTj"/>
+                                            <outlet property="logoView" destination="Maa-dV-vv1" id="w5s-Po-bL7"/>
+                                            <outlet property="metadataView" destination="7fh-3g-8gY" id="FBL-dq-dxh"/>
+                                            <outlet property="titleView" destination="50o-Qe-Sdl" id="4L4-ig-XOY"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="gjb-cV-ex8" id="nk4-iM-AG6"/>
+                                    <outlet property="delegate" destination="gjb-cV-ex8" id="ooB-c3-ykA"/>
+                                </connections>
+                            </collectionView>
                             <pageControl hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Xvt-1d-6RY">
                                 <rect key="frame" x="20" y="20" width="96" height="30"/>
                                 <color key="pageIndicatorTintColor" red="1" green="0.086735173969348711" blue="0.92219595382380481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="0.32389615773020675" green="0.87879834254143652" blue="0.86665754680695706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
-                            <button hidden="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ku-Ht-96p">
-                                <rect key="frame" x="1083" y="133" width="100" height="66"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="didTapNextButton:" destination="gjb-cV-ex8" eventType="touchUpInside" id="Spg-TK-xMW"/>
-                                </connections>
-                            </button>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mVq-XQ-cJz" userLabel="Collection View">
-                                <rect key="frame" x="0.0" y="780" width="1920" height="300"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="Tkt-Pl-quF" kind="embed" id="Y76-ut-agd"/>
-                                </connections>
-                            </containerView>
-                            <collectionView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" prefetchingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8F-lL-bqy" customClass="InfiniteCollectionView" customModule="Channel_Change_Guide" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="680" width="1920" height="400"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="100" id="L8b-UP-fdI">
-                                    <size key="itemSize" width="600" height="350"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHorizontalScroll" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </collectionView>
-                            <containerView hidden="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U86-eW-DBU">
-                                <rect key="frame" x="0.0" y="780" width="1920" height="300"/>
-                                <connections>
-                                    <segue destination="A7T-Ec-iyt" kind="embed" id="NV1-3y-c0E"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="U86-eW-DBU" firstAttribute="top" secondItem="FN8-2S-wlo" secondAttribute="bottom" id="9hR-ba-ImR"/>
-                            <constraint firstAttribute="trailing" secondItem="U86-eW-DBU" secondAttribute="trailing" id="Xhg-vc-F6h"/>
                             <constraint firstItem="Xvt-1d-6RY" firstAttribute="leading" secondItem="w7O-um-obi" secondAttribute="leading" constant="20" id="ZtT-uh-yP0"/>
-                            <constraint firstItem="211-Dy-ZQs" firstAttribute="top" secondItem="U86-eW-DBU" secondAttribute="bottom" id="eAc-87-5bd"/>
-                            <constraint firstAttribute="trailing" secondItem="3Ku-Ht-96p" secondAttribute="trailing" constant="20" id="glm-ZK-bb1"/>
-                            <constraint firstItem="211-Dy-ZQs" firstAttribute="top" secondItem="3Ku-Ht-96p" secondAttribute="bottom" constant="20" id="jKU-R3-9jq"/>
-                            <constraint firstItem="U86-eW-DBU" firstAttribute="leading" secondItem="w7O-um-obi" secondAttribute="leading" id="pdy-6m-mzI"/>
                             <constraint firstItem="Xvt-1d-6RY" firstAttribute="top" secondItem="FN8-2S-wlo" secondAttribute="bottom" constant="20" id="vhe-BL-hhL"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="collectionView" destination="mVq-XQ-cJz" id="L5q-bi-ny2"/>
-                        <outlet property="containerView" destination="U86-eW-DBU" id="4QV-HF-nea"/>
-                        <outlet property="infiniteCollectionView" destination="P8F-lL-bqy" id="IXP-Xa-PX5"/>
-                        <outlet property="overlayView" destination="Ztv-Nd-oEQ" id="lDk-yE-Zxl"/>
+                        <outlet property="collectionView" destination="EiI-Ue-OdD" id="t6e-je-7D4"/>
+                        <outlet property="overlayView" destination="XUH-6K-xbs" id="33v-Zb-Yfx"/>
                         <outlet property="pageControl" destination="Xvt-1d-6RY" id="FVe-8F-FO2"/>
                         <outlet property="videoView" destination="LaI-8t-do8" id="lzC-iD-KSW"/>
                     </connections>
@@ -98,188 +105,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="erM-on-UPn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="19" y="-2613"/>
-        </scene>
-        <!--Collection View Controller-->
-        <scene sceneID="Q5t-qZ-umv">
-            <objects>
-                <collectionViewController id="Tkt-Pl-quF" customClass="CollectionViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleAspectFit" scrollEnabled="NO" pagingEnabled="YES" dataMode="prototypes" id="EiI-Ue-OdD">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="300"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="300" id="CEQ-fG-2nq">
-                            <size key="itemSize" width="800" height="250"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="Cell" id="0KY-c1-TLF" customClass="CollectionViewCell" customModule="Channel_Change_Guide" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="25" width="800" height="250"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="800" height="250"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keyart_csn" adjustsImageWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iQ0-7M-tlb">
-                                            <rect key="frame" x="20" y="20" width="273" height="187"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo_cbs" translatesAutoresizingMaskIntoConstraints="NO" id="Maa-dV-vv1">
-                                            <rect key="frame" x="407" y="23" width="133" height="58"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50o-Qe-Sdl">
-                                            <rect key="frame" x="406" y="127" width="343" height="46"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fh-3g-8gY">
-                                            <rect key="frame" x="406" y="188" width="343" height="46"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </view>
-                                <connections>
-                                    <outlet property="keyartView" destination="iQ0-7M-tlb" id="ALa-UI-oTj"/>
-                                    <outlet property="logoView" destination="Maa-dV-vv1" id="w5s-Po-bL7"/>
-                                    <outlet property="metadataView" destination="7fh-3g-8gY" id="FBL-dq-dxh"/>
-                                    <outlet property="titleView" destination="50o-Qe-Sdl" id="4L4-ig-XOY"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="Tkt-Pl-quF" id="CKq-eZ-kzb"/>
-                            <outlet property="delegate" destination="Tkt-Pl-quF" id="1hV-Hg-9Ss"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rxt-9x-BoB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3331" y="-2613"/>
-        </scene>
-        <!--Page View Controller-->
-        <scene sceneID="3Iv-Zt-2iB">
-            <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="currentContext" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="A7T-Ec-iyt" customClass="PageViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tfP-Ta-ha7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="19" y="-640"/>
-        </scene>
-        <!--Channel View Controller-->
-        <scene sceneID="0lZ-ib-WDV">
-            <objects>
-                <viewController storyboardIdentifier="CSNViewController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vLd-VQ-PH0" customClass="ChannelViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Oq9-E0-VNs"/>
-                        <viewControllerLayoutGuide type="bottom" id="kEr-g4-6fA"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="dnb-1J-9zv">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="w99-OQ-hPG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3130" y="814"/>
-        </scene>
-        <!--Channel View Controller-->
-        <scene sceneID="I8F-ng-crr">
-            <objects>
-                <viewController storyboardIdentifier="CBSViewController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VTE-s4-3Bo" customClass="ChannelViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4df-QK-ncG"/>
-                        <viewControllerLayoutGuide type="bottom" id="Nt4-Xm-6La"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="x8p-vz-T33">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JPh-Io-HHJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1323" y="814"/>
-        </scene>
-        <!--Channel View Controller-->
-        <scene sceneID="rV6-QZ-I8T">
-            <objects>
-                <viewController storyboardIdentifier="FOXViewController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="M8B-o4-fAk" customClass="ChannelViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="v8W-2z-DBd"/>
-                        <viewControllerLayoutGuide type="bottom" id="y05-Re-bi8"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="LuN-ZE-N63">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XQU-oz-rxR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7845" y="814"/>
-        </scene>
-        <!--Channel View Controller-->
-        <scene sceneID="5SG-Hj-0g7">
-            <objects>
-                <viewController storyboardIdentifier="CNNViewController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="g5I-D7-xvE" customClass="ChannelViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="lz2-R3-AnC"/>
-                        <viewControllerLayoutGuide type="bottom" id="gxS-1V-upG"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="L7L-5A-wf1">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VsS-Pv-jff" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="917" y="814"/>
-        </scene>
-        <!--Channel View Controller-->
-        <scene sceneID="cWq-2E-ME6">
-            <objects>
-                <viewController storyboardIdentifier="AMCViewController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xoz-Im-lQw" customClass="ChannelViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="rEe-LU-WEu"/>
-                        <viewControllerLayoutGuide type="bottom" id="LhW-hI-PaP"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="VwB-MW-SDj">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jXX-g8-aiW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="uTc-sh-yFh">
-                    <pressTypeMask key="allowedPressTypes" select="YES"/>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="-3575" y="814"/>
-        </scene>
-        <!--Channel View Controller-->
-        <scene sceneID="qRy-fM-bSV">
-            <objects>
-                <viewController storyboardIdentifier="ESPNViewController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GY4-Pq-8RY" customClass="ChannelViewController" customModule="Channel_Change_Guide" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4Sn-jB-clO"/>
-                        <viewControllerLayoutGuide type="bottom" id="oKf-mC-0Wp"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="D7d-oM-V9K">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7CK-En-VCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5414" y="814"/>
         </scene>
     </scenes>
     <resources>

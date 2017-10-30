@@ -1,16 +1,13 @@
 import UIKit
 import AVFoundation
 
-private let pizza = "cheese"
-
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var videoView: UIView!
-    @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var overlayView: UIView!
+    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var channelName: UILabel!
-    @IBOutlet weak var collectionView: UIView!
+    @IBOutlet weak var collectionView: CollectionView!
     
     let queue = DispatchQueue(label: "queue", attributes: .concurrent)
     
@@ -32,8 +29,6 @@ class ViewController: UIViewController {
     var guideLayerHBO: CALayer?
     var guideLayerHSN: CALayer?
     
-    var surfing = false
-    
     var direction = ""
     
     var resetOrigin: CGFloat?
@@ -49,6 +44,64 @@ class ViewController: UIViewController {
         }
     }
     
+    var currentCellIndex: Int?
+    
+    /*******************************************************/
+    
+    let channelArrays = Array(repeating: [
+        "amc",
+        "cbs",
+        "cnn",
+        "csn",
+        "espn",
+        "fox"
+        ], count: 50)
+    
+    let channelKeyartArrays = Array(repeating: [
+        "keyart_amc",
+        "keyart_cbs",
+        "keyart_cnn",
+        "keyart_csn",
+        "keyart_espn",
+        "keyart_fox"
+        ], count: 50)
+    
+    let channelLogoArrays = Array(repeating: [
+        "logo_amc",
+        "logo_cbs",
+        "logo_cnn",
+        "logo_csn",
+        "logo_espn",
+        "logo_fox"
+        ], count: 50)
+    
+    var channelTitleArrays = Array(repeating: [
+        "The Walking Dead",
+        "The Talk",
+        "State of the Union",
+        "MIL vs SAC",
+        "UCLA vs AZW",
+        "Empire"
+        ], count: 50)
+    
+    var channelMetadataArrays = Array(repeating: [
+        "S2 E7 | The Other Side",
+        "S7 EP182 | Actress Salma Hayek",
+        "S77 E2 | Gary Johnson",
+        "2017",
+        "2017",
+        "S2 E3 | Bout that"
+        ], count: 50)
+    
+    var channels = [String]()
+    var channelKeyarts = [String]()
+    var channelLogos = [String]()
+    var channelTitles = [String]()
+    var channelMetadatas = [String]()
+    
+    /*******************************************************/
+    
+    
     fileprivate let cellItems = [
         "amc",
         "cbs",
@@ -56,34 +109,6 @@ class ViewController: UIViewController {
         "csn",
         "espn",
         "fox"
-    ]
-    
-    @IBOutlet weak var infiniteCollectionView: InfiniteCollectionView!
-    {
-        didSet {
-            infiniteCollectionView.register(UINib(nibName: "ExampleCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cellCollectionView")
-            infiniteCollectionView.infiniteDataSource = self
-            infiniteCollectionView.infiniteDelegate = self
-            infiniteCollectionView.reloadData()
-        }
-    }
-    
-    var channelKeyarts: [UIImage] = [
-        #imageLiteral(resourceName: "keyart_amc"),
-        #imageLiteral(resourceName: "keyart_cbs"),
-        #imageLiteral(resourceName: "keyart_cnn"),
-        #imageLiteral(resourceName: "keyart_csn"),
-        #imageLiteral(resourceName: "keyart_espn"),
-        #imageLiteral(resourceName: "keyart_fox")
-    ]
-    
-    var channelLogos: [UIImage] = [
-        #imageLiteral(resourceName: "logo_amc"),
-        #imageLiteral(resourceName: "logo_cbs"),
-        #imageLiteral(resourceName: "logo_cnn"),
-        #imageLiteral(resourceName: "logo_csn"),
-        #imageLiteral(resourceName: "logo_espn"),
-        #imageLiteral(resourceName: "logo_fox")
     ]
     
     var logoImages: [UIImage] = [#imageLiteral(resourceName: "logo_amc"),#imageLiteral(resourceName: "logo_cbs"),#imageLiteral(resourceName: "logo_cnn"),#imageLiteral(resourceName: "logo_csn"),#imageLiteral(resourceName: "logo_espn"),#imageLiteral(resourceName: "logo_fox")]
@@ -264,51 +289,56 @@ class ViewController: UIViewController {
         playerFOX.isMuted = true;
         playerFOX.play()
 
+        // resume playback upon app focus
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForegroundNotification), name: .UIApplicationWillEnterForeground, object: nil)
+        
         // add target
         
         pageControl.addTarget(self, action: #selector(ViewController.didChangePageControlValue), for: .valueChanged)
         
-        // swipe detection
+        // tap detection
+        // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.respondToTapGesture))
+        // self.view.addGestureRecognizer(tapGesture)
         
-        /*
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.doChannelChange(sender:)))
-        self.view.addGestureRecognizer(tapGesture)
+        // overlay view
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizerDirection.right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeDown.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(swipeDown)
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeUp.direction = UISwipeGestureRecognizerDirection.up
-        self.view.addGestureRecognizer(swipeUp)
-        */
- 
-        let gradient = CAGradientLayer()
-
-        gradient.frame.size = CGSize(width: 1920, height: 600)
-        gradient.colors = [UIColor.black.withAlphaComponent(0.5), UIColor.black.cgColor]
-        gradient.locations = [0.0, 0.3]
-        
-        self.collectionView.layer.insertSublayer(gradient, at: 0)
-        
-        // initial appearance
-        
-        // Overlay View
         self.overlayView.alpha = 0.0
         
+        // gradient layer
+        
+        let gradientLayer = CAGradientLayer()
+
+        gradientLayer.frame = CGRect(x: 0, y: 780, width: 1920, height: 300)
+        gradientLayer.colors = [UIColor.black.withAlphaComponent(0.5), UIColor.black.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        
+        self.overlayView.layer.insertSublayer(gradientLayer, at: 4)
+        
+        // initial appearance
+                
         // Collection View
+        self.collectionView.isScrollEnabled = false
         self.collectionView.alpha = 0.0
         
-        // Container View
-        self.containerView.alpha = 0.0
+        for array in channelArrays {
+            channels += array
+        }
+        
+        for array in channelKeyartArrays {
+            channelKeyarts += array
+        }
+        
+        for array in channelLogoArrays {
+            channelLogos += array
+        }
+        
+        for array in channelTitleArrays {
+            channelTitles += array
+        }
+        
+        for array in channelMetadataArrays {
+            channelMetadatas += array
+        }
         
         // Page View Controller
         self.pageViewController?.view.frame = CGRect(x: 0, y: 0, width: 1920, height: 1080)
@@ -316,38 +346,19 @@ class ViewController: UIViewController {
         self.pageViewController?.view.clipsToBounds = false
         
         
-        
-        
-        
-        
-        
-        
-        
-        
         // [self.collectionView scrollToItemAtIndexPath:self.indexPathFromVC atScrollPosition:UICollectionViewScrollPositionNone animated:NO]
     }
     
+    func appWillEnterForegroundNotification() {
+        playerLayer?.player?.play()
+        playerLayerCBS?.player?.play()
+        playerLayerCNN?.player?.play()
+        playerLayerCSN?.player?.play()
+        playerLayerESPN?.player?.play()
+        playerLayerFOX?.player?.play()
+    }
+    
     func doRestartTimer() {
-        /*
-        if (direction == "left") {
-            resetOrigin = 200
-        } else {
-            resetOrigin = -200
-        }
-        
-        pendingTask2 = DispatchWorkItem {
-            UIView.animate(withDuration: 0.3, animations: {
-                // self.overlayView.alpha = 0.0
-                self.collectionView.alpha = 0.0
-                self.collectionView.frame.origin.x = self.resetOrigin!
-            }, completion: { (finished: Bool) in
-                self.pageViewController?.scrollToViewController(index: self.resetIndex)
-            })
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
-        */
-        
         pendingTask2 = DispatchWorkItem {
             self.doHide()
         }
@@ -362,112 +373,37 @@ class ViewController: UIViewController {
     }
     
     func doShow(index: Int) {
-        if (self.containerView.isHidden) { // show preview
-            pendingTask = DispatchWorkItem {
-                self.surfing = true
-                
-                // animate preview in
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.collectionView?.alpha = 1.0
-                }, completion: nil)
-            }
-            
-            DispatchQueue.main.async(execute: self.pendingTask!)
-        } else { // show channel
-            // animate tuning to channel
+        pendingTask = DispatchWorkItem {
+            // animate preview in
             UIView.animate(withDuration: 0.3, animations: {
-                
-                self.collectionView?.alpha = 0.0
-                
-                self.collectionView.isHidden = false
-                
-                self.containerView.isHidden = false
-                self.containerView.alpha = 1.0
-                
+                self.overlayView.alpha = 1.0
+                self.collectionView?.alpha = 1.0
             }, completion: nil)
         }
+        
+        DispatchQueue.main.async(execute: self.pendingTask!)
     }
     
-    func doShowGuide() {
+    func doHide() {
         UIView.animate(withDuration: 0.3, animations: {
-            self.containerView.alpha = 0.5
-            debugPrint("fade in final")
+            self.overlayView.alpha = 0.0
+            self.collectionView.alpha = 0.0
         }, completion: { (finished: Bool) in
             // something
         })
     }
     
-    func doHide() {
-        // reset channel
-        self.pageViewController?.scrollToViewController(index: self.resetIndex)
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.collectionView.alpha = 0.0
-            
-            self.containerView.alpha = 0.0
-        }, completion: { (finished: Bool) in
-            self.surfing = false
-        })
-    }
-    
-    func doHideGuide() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.containerView.alpha = 0.0
-            debugPrint("fade out final")
-            
-            self.pageViewController?.scrollToViewController(index: self.resetIndex)
-            
-        }, completion: nil)
-    }
-    
+    /*
     func respondToTapGesture(gesture: UITapGestureRecognizer) {
-        if (self.containerView.alpha == 0.0) { // neutral
-            // nothing
-        } else {
-            // self.doShow(index: self.nextIndex!)
-        }
+        
     }
+    */
     
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
 
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
-                /*
-                debugPrint("Swiped right")
-                
-                // self.containerView.frame.origin.x = -200
-                
-                //self.collectionView.frame.origin.x = -200
-                
-                pendingTask = DispatchWorkItem {
-                    UIView.animate(withDuration: 0.3, animations: {
-                        // self.overlayView.alpha = 0.5
-                        self.collectionView.alpha = 0.5
-                        self.collectionView.frame.origin.x = 0
-                    }, completion: nil)
-                }
-
-                pendingTask2 = DispatchWorkItem {
-                    UIView.animate(withDuration: 0.3, animations: {
-                        // self.overlayView.alpha = 0.0
-                        self.collectionView.alpha = 0.0
-                        //self.collectionView.frame.origin.x = -200
-                    }, completion: { (finished: Bool) in
-                        self.pageViewController?.scrollToViewController(index: self.resetIndex)
-                    })
-                }
-                
-                direction = "right"
-                
-                
-                // show guide
-                DispatchQueue.main.async(execute: self.pendingTask!)
-                
-                // hide guide
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
-                */
-                
                 direction = "right"
                 
                 self.doShow(index: self.resetIndex)
@@ -475,37 +411,6 @@ class ViewController: UIViewController {
             case UISwipeGestureRecognizerDirection.down:
                 debugPrint("Swiped down")
             case UISwipeGestureRecognizerDirection.left:
-                /*
-                debugPrint("Swiped left")
-                
-                //self.collectionView.frame.origin.x = 200
-                
-                pendingTask = DispatchWorkItem {
-                    UIView.animate(withDuration: 0.3, animations: {
-                        // self.overlayView.alpha = 0.5
-                        self.collectionView.alpha = 0.5
-                        self.collectionView.frame.origin.x = 0
-                    }, completion: nil)
-                }
-                
-                pendingTask2 = DispatchWorkItem {
-                    UIView.animate(withDuration: 0.3, animations: {
-                        // self.overlayView.alpha = 0.0
-                        self.collectionView.alpha = 0.0
-                        //self.collectionView.frame.origin.x = 200
-                    }, completion: { (finished: Bool) in
-                        self.pageViewController?.scrollToViewController(index: self.resetIndex)
-                    })
-                }
-                // show guide
-                DispatchQueue.main.async(execute: self.pendingTask!)
-                
-                // hide guide
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4.0, execute: self.pendingTask2!)
-                
-                direction = "left"
-                */
-                
                 direction = "left"
                 
                 self.doShow(index: self.resetIndex)
@@ -518,11 +423,9 @@ class ViewController: UIViewController {
         }
     }
     
-    func doChannelChange(sender: UITapGestureRecognizer? = nil) {
-        resetIndex = pageControl.currentPage
-        
-        switch pageControl.currentPage {
-        case 0: // AMC
+    func doChannelChange(channel: String) {
+        switch channel {
+        case "amc":
             playerLayer?.player?.isMuted = false
             playerLayer?.isHidden = false
             guideLayer?.isHidden = false
@@ -547,7 +450,7 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
             
-        case 1: // CBS
+        case "cbs":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
             guideLayer?.isHidden = true
@@ -572,7 +475,7 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
         
-        case 2: // CNN
+        case "cnn":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
             guideLayer?.isHidden = true
@@ -597,7 +500,7 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
             
-        case 3: // CSN
+        case "csn":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
             guideLayer?.isHidden = true
@@ -622,7 +525,7 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
             
-        case 4: // ESPN
+        case "espn":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
             guideLayer?.isHidden = true
@@ -647,7 +550,7 @@ class ViewController: UIViewController {
             playerLayerFOX?.isHidden = true
             guideLayerFOX?.isHidden = true
             
-        case 5: // FOX
+        case "fox":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
             guideLayer?.isHidden = true
@@ -693,6 +596,96 @@ class ViewController: UIViewController {
         pageViewController?.scrollToViewController(index: pageControl.currentPage)
     }
     
+    /********************************************************/
+    // collection view
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return channels.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
+        
+        cell.keyartView.image = UIImage(named: String(describing: channelKeyarts[indexPath.row]))
+        cell.keyartView.contentMode = .scaleAspectFit
+        
+        
+        cell.logoView.image = UIImage(named: String(describing: channelLogos[indexPath.row]))
+        cell.logoView.contentMode = .scaleAspectFit
+        
+        cell.titleView.text = String(describing: channelTitles[indexPath.row])
+        
+        cell.metadataView.text = String(describing: channelMetadatas[indexPath.row])
+        
+        cell.alpha = 0.4
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("You selected cell #\(indexPath.item)!")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        
+        // cell?.backgroundColor = UIColor.red
+        
+        doChannelChange(channel: self.channels[indexPath.row])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        
+        // cell?.backgroundColor = UIColor.cyan
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return collectionView.frame.size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        // As we are not using the default scrollable feature from the UIScrollView we can scroll ourself to the center of the focused cell
+        
+        if ((context.nextFocusedIndexPath != nil) && !collectionView.isScrollEnabled) {
+            collectionView.scrollToItem(at: context.nextFocusedIndexPath!, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+            
+            // collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.frame = CGRect(x: 0, y: 0, width: 990, height: 500)
+        }
+        
+        if (context.previouslyFocusedIndexPath != nil) {
+            
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.alpha = 0.4
+                // collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                
+            }, completion: nil)
+        }
+        
+        if (context.nextFocusedIndexPath != nil) {
+            UIView.animate(withDuration: 0.3, animations: {
+                collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.alpha = 1.0
+                // collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                
+            }, completion: nil)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.collectionView?.scrollToItem(at: IndexPath(row: 149, section: 0), at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
+        debugPrint("didappear")
+    }
+    
+    /********************************************************/
+    
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         
         for press in presses {
@@ -703,14 +696,17 @@ class ViewController: UIViewController {
                 super.pressesEnded(presses, with: event)
             }
         }
-        
-        /*
-        if(presses.first?.type == UIPressType.menu) {
-            self.doHide()
-        }
-        */
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
 }
+
+
+
+
 
 extension ViewController: PageViewControllerDelegate {
     
@@ -726,29 +722,18 @@ extension ViewController: PageViewControllerDelegate {
     }
 }
 
-extension ViewController: InfiniteCollectionViewDataSource
-{
-    func numberOfItems(_ collectionView: UICollectionView) -> Int
-    {
-        return cellItems.count
-    }
-    
-    func cellForItemAtIndexPath(_ collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)  -> UICollectionViewCell
-    {
-        let cell = infiniteCollectionView.dequeueReusableCell(withReuseIdentifier: "cellCollectionView", for: dequeueIndexPath) as! ExampleCollectionViewCell
-        cell.lbTitle.text = cellItems[usableIndexPath.row]
-        // cell.backgroundImage.image = UIImage(named: "cell-1")
-        return cell
-    }
-}
 
-extension ViewController: InfiniteCollectionViewDelegate
-{
-    func didSelectCellAtIndexPath(_ collectionView: UICollectionView, usableIndexPath: IndexPath)
-    {
-        debugPrint("Selected cell with name \(cellItems[usableIndexPath.row])")
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
