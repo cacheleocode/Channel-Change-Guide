@@ -459,6 +459,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     
     func appWillEnterForegroundNotification() {
+        playerLayer?.isHidden = false
+        playerLayerCBS?.isHidden = false
+        playerLayerCNN?.isHidden = false
+        playerLayerCSN?.isHidden = false
+        playerLayerESPN?.isHidden = false
+        playerLayerFOX?.isHidden = false
+        
+        playerLayer?.player?.isMuted = false
+        
         playerLayer?.player?.play()
         playerLayerCBS?.player?.play()
         playerLayerCNN?.player?.play()
