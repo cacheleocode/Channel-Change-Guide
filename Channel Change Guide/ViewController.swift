@@ -309,6 +309,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.respondToTapGesture))
         // self.view.addGestureRecognizer(tapGesture)
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.respondToTapGesture))
+        tapGesture.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        self.view.addGestureRecognizer(tapGesture)
+        
         // gradient layer
         
         let gradientLayer = CAGradientLayer()
@@ -508,11 +512,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }, completion: nil)
     }
     
-    /*
-    func respondToTapGesture(gesture: UITapGestureRecognizer) {
-        
+    func respondToTapGesture() {
+        self.doHide()
     }
-    */
     
     func doChannelChange(channel: String) {
         switch channel {
@@ -759,13 +761,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         
-        for press in presses {
-            switch press.type {
-            case .menu:
-                self.doHide()
-            default:
-                super.pressesEnded(presses, with: event)
-            }
+        if(presses.first?.type == UIPressType.menu) {
+            self.doHide()
         }
     }
     
