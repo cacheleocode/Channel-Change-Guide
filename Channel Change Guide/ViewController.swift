@@ -4,6 +4,11 @@ import AVFoundation
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var videoView: UIView!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var keyartView: UIImageView!
+    @IBOutlet weak var logoView: UIImageView!
+    @IBOutlet weak var titleView: UILabel!
+    @IBOutlet weak var metadataView: UILabel!
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var collectionView: CollectionView!
     
@@ -13,6 +18,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var pendingTask: DispatchWorkItem?
     var pendingTask2: DispatchWorkItem?
+    var pendingTask3: DispatchWorkItem?
     
     // player layers
     
@@ -78,10 +84,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var channelTitles = [String]()
     var channelMetadatas = [String]()
     
+    // mode
+    
+    var surfing = false
+    
     // emulate lag
     
     var randomNum: UInt32?
     var someInt: Int?
+    var someDouble: Double?
+    var randomTime: TimeInterval?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -245,10 +257,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.respondToTapGesture))
         // self.view.addGestureRecognizer(tapGesture)
         
-        // overlay view
-        
-        self.overlayView.alpha = 0.0
-        
         // gradient layer
         
         let gradientLayer = CAGradientLayer()
@@ -264,6 +272,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Collection View
         self.collectionView.isScrollEnabled = false
         self.collectionView.alpha = 0.0
+        
+        // overlay view
+        self.overlayView.alpha = 0.0
+        
+        // loading view
+        self.loadingView.alpha = 0.0
+        
+        // fake populate infinite loop
         
         for array in channelArrays {
             channels += array
@@ -302,7 +318,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.doHide()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(6000), execute: self.pendingTask2!)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(5000), execute: self.pendingTask2!)
     }
     
     func doInvalidateTimer() {
@@ -326,9 +342,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         UIView.animate(withDuration: 0.3, animations: {
             self.overlayView.alpha = 0.0
             self.collectionView.alpha = 0.0
-        }, completion: { (finished: Bool) in
-            // something
-        })
+        }, completion: nil)
     }
     
     /*
@@ -494,9 +508,35 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         
-        // cell?.backgroundColor = UIColor.red
+        // hide UI
+        self.doHide()
         
-        doChannelChange(channel: self.channels[indexPath.row])
+        // emulate loading
+        self.randomNum = arc4random_uniform(15) // range
+        self.someInt = Int(self.randomNum!)
+        self.someDouble = Double(self.someInt!) / 10
+        
+        if (self.someDouble! < 0.5) {
+            self.someDouble! = 0.5
+        }
+        
+        // populate loading view
+        self.keyartView.image = UIImage(named: String(describing: channelKeyarts[indexPath.row]))
+        self.logoView.image = UIImage(named: String(describing: channelLogos[indexPath.row]))
+        self.titleView.text = String(describing: channelTitles[indexPath.row])
+        self.metadataView.text = String(describing: channelMetadatas[indexPath.row])
+
+        UIView.animate(withDuration: 0.3, animations: {
+            self.loadingView.alpha = 1.0
+        }, completion: { (finished: Bool) in
+            
+            UIView.animate(withDuration: 0.3, delay: self.someDouble!, animations: {
+                self.doChannelChange(channel: self.channels[indexPath.row])
+                
+                self.loadingView.alpha = 0.0
+            }, completion: nil)
+            
+        })
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
@@ -541,7 +581,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidAppear(animated)
         
         self.collectionView?.scrollToItem(at: IndexPath(row: 149, section: 0), at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
-        debugPrint("didappear")
     }
     
     /********************************************************/
