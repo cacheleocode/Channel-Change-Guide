@@ -1,15 +1,20 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var overlayView: UIView!
-    @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet weak var channelName: UILabel!
     @IBOutlet weak var collectionView: CollectionView!
     
+    // dispatch queue
+    
     let queue = DispatchQueue(label: "queue", attributes: .concurrent)
+    
+    var pendingTask: DispatchWorkItem?
+    var pendingTask2: DispatchWorkItem?
+    
+    // player layers
     
     var playerLayer: AVPlayerLayer?
     var playerLayerCBS: AVPlayerLayer?
@@ -20,33 +25,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var playerLayerHBO: AVPlayerLayer?
     var playerLayerHSN: AVPlayerLayer?
     
-    var guideLayer: CALayer?
-    var guideLayerCBS: CALayer?
-    var guideLayerCNN: CALayer?
-    var guideLayerCSN: CALayer?
-    var guideLayerESPN: CALayer?
-    var guideLayerFOX: CALayer?
-    var guideLayerHBO: CALayer?
-    var guideLayerHSN: CALayer?
-    
-    var direction = ""
-    
-    var resetOrigin: CGFloat?
-    
-    var resetIndex = 0
-
-    var pendingTask: DispatchWorkItem?
-    var pendingTask2: DispatchWorkItem?
-    
-    var pageViewController: PageViewController? {
-        didSet {
-            pageViewController?.gotDelegate = self
-        }
-    }
-    
-    var currentCellIndex: Int?
-    
-    /*******************************************************/
+    // cell content
     
     let channelArrays = Array(repeating: [
         "amc",
@@ -99,37 +78,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var channelTitles = [String]()
     var channelMetadatas = [String]()
     
-    /*******************************************************/
-    
-    
-    fileprivate let cellItems = [
-        "amc",
-        "cbs",
-        "cnn",
-        "csn",
-        "espn",
-        "fox"
-    ]
-    
-    var logoImages: [UIImage] = [#imageLiteral(resourceName: "logo_amc"),#imageLiteral(resourceName: "logo_cbs"),#imageLiteral(resourceName: "logo_cnn"),#imageLiteral(resourceName: "logo_csn"),#imageLiteral(resourceName: "logo_espn"),#imageLiteral(resourceName: "logo_fox")]
-    
-    var channelTitle: Array = [
-        "The Walking Dead",
-        "The Talk",
-        "State of the Union",
-        "MIL vs SAC",
-        "UCLA vs AZW",
-        "Empire"
-    ]
-    
-    var channelDescription: Array = [
-        "S2 E7 | The Other Side",
-        "S7 EP182 | Actress Salma Hayek",
-        "S77 E2 | Gary Johnson",
-        "2017",
-        "2017",
-        "S2 E3 | Bout that"
-    ]
+    // emulate lag
     
     var randomNum: UInt32?
     var someInt: Int?
@@ -292,10 +241,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // resume playback upon app focus
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForegroundNotification), name: .UIApplicationWillEnterForeground, object: nil)
         
-        // add target
-        
-        pageControl.addTarget(self, action: #selector(ViewController.didChangePageControlValue), for: .valueChanged)
-        
         // tap detection
         // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.respondToTapGesture))
         // self.view.addGestureRecognizer(tapGesture)
@@ -340,12 +285,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             channelMetadatas += array
         }
         
-        // Page View Controller
-        self.pageViewController?.view.frame = CGRect(x: 0, y: 0, width: 1920, height: 1080)
-        self.pageViewController?.view.bounds = CGRect(x: 0, y: 600, width: 1000, height: 500)
-        self.pageViewController?.view.clipsToBounds = false
-        
-        
         // [self.collectionView scrollToItemAtIndexPath:self.indexPathFromVC atScrollPosition:UICollectionViewScrollPositionNone animated:NO]
     }
     
@@ -369,12 +308,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func doInvalidateTimer() {
         pendingTask2?.cancel()
         
-        self.doShow(index: self.resetIndex)
+        self.doShow()
     }
     
-    func doShow(index: Int) {
+    func doShow() {
         pendingTask = DispatchWorkItem {
-            // animate preview in
             UIView.animate(withDuration: 0.3, animations: {
                 self.overlayView.alpha = 1.0
                 self.collectionView?.alpha = 1.0
@@ -399,206 +337,128 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     */
     
-    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-
-            switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.right:
-                direction = "right"
-                
-                self.doShow(index: self.resetIndex)
-                
-            case UISwipeGestureRecognizerDirection.down:
-                debugPrint("Swiped down")
-            case UISwipeGestureRecognizerDirection.left:
-                direction = "left"
-                
-                self.doShow(index: self.resetIndex)
-                
-            case UISwipeGestureRecognizerDirection.up:
-                debugPrint("Swiped up")
-            default:
-                break
-            }
-        }
-    }
-    
     func doChannelChange(channel: String) {
         switch channel {
         case "amc":
             playerLayer?.player?.isMuted = false
             playerLayer?.isHidden = false
-            guideLayer?.isHidden = false
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
-            
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
             
         case "cbs":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = false
             playerLayerCBS?.isHidden = false
-            guideLayerCBS?.isHidden = false
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
         
         case "cnn":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = false
             playerLayerCNN?.isHidden = false
-            guideLayerCNN?.isHidden = false
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
             
         case "csn":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = false
             playerLayerCSN?.isHidden = false
-            guideLayerCSN?.isHidden = false
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
             
         case "espn":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = false
             playerLayerESPN?.isHidden = false
-            guideLayerESPN?.isHidden = false
             
             playerLayerFOX?.player?.isMuted = true
             playerLayerFOX?.isHidden = true
-            guideLayerFOX?.isHidden = true
             
         case "fox":
             playerLayer?.player?.isMuted = true
             playerLayer?.isHidden = true
-            guideLayer?.isHidden = true
             
             playerLayerCBS?.player?.isMuted = true
             playerLayerCBS?.isHidden = true
-            guideLayerCBS?.isHidden = true
             
             playerLayerCNN?.player?.isMuted = true
             playerLayerCNN?.isHidden = true
-            guideLayerCNN?.isHidden = true
             
             playerLayerCSN?.player?.isMuted = true
             playerLayerCSN?.isHidden = true
-            guideLayerCSN?.isHidden = true
             
             playerLayerESPN?.player?.isMuted = true
             playerLayerESPN?.isHidden = true
-            guideLayerESPN?.isHidden = true
             
             playerLayerFOX?.player?.isMuted = false
             playerLayerFOX?.isHidden = false
-            guideLayerFOX?.isHidden = false
             
         default:
             debugPrint("default")
         }
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let pageViewController = segue.destination as? PageViewController {
-            self.pageViewController = pageViewController
-        }
-    }
-    
-    @IBAction func didTapNextButton(_ sender: UIButton) {
-        pageViewController?.scrollToNextViewController()
-    }
-    
-    // Fired when the user taps on the pageControl to change its current page
-    
-    func didChangePageControlValue() {
-        pageViewController?.scrollToViewController(index: pageControl.currentPage)
-    }
-    
     /********************************************************/
     // collection view
-    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -701,24 +561,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
-    }
-}
-
-
-
-
-
-extension ViewController: PageViewControllerDelegate {
-    
-    func pageViewController(_ pageViewController: PageViewController,
-                            didUpdatePageCount count: Int) {
-        pageControl.numberOfPages = count
-    }
-    
-    func pageViewController(_ pageViewController: PageViewController,
-                            didUpdatePageIndex index: Int) {
-        pageControl.currentPage = index
-        
     }
 }
 
