@@ -315,7 +315,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
         gradientLayer.frame = CGRect(x: 0, y: 780, width: 1920, height: 400)
         gradientLayer.colors = [UIColor.black.withAlphaComponent(0.5), UIColor.black.cgColor]
-        gradientLayer.locations = [0.0, 0.5]
+        gradientLayer.locations = [0.0, 0.3]
         
         self.overlayView.layer.insertSublayer(gradientLayer, at: 4)
         
@@ -641,7 +641,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         cell.keyartView.image = UIImage(named: String(describing: channelKeyarts[indexPath.row]))
         cell.keyartView.contentMode = .scaleAspectFit
-        
+        // cell.keyartView.bounds = cell.keyartView.frame.insetBy(dx: 5.0, dy: 5.0)
         
         cell.logoView.image = UIImage(named: String(describing: channelLogos[indexPath.row]))
         cell.logoView.contentMode = .scaleAspectFit
@@ -650,7 +650,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         cell.metadataView.text = String(describing: channelMetadatas[indexPath.row])
         
-        cell.alpha = 0.4
+        cell.alpha = 0.3
         
         return cell
     }
@@ -707,9 +707,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         // cell?.backgroundColor = UIColor.cyan
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
+        // return CGSize(width: CGFloat(900), height: CGFloat(900))
     }
     
     func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
@@ -725,7 +726,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             
             UIView.animate(withDuration: 0.3, animations: {
-                collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.alpha = 0.4
+                collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.alpha = 0.3
                 // collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
                 
             }, completion: nil)
