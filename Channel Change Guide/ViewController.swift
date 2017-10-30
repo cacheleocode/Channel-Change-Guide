@@ -508,35 +508,44 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         
-        // hide UI
-        self.doHide()
+        pendingTask?.cancel()
+        pendingTask2?.cancel()
         
-        // emulate loading
-        self.randomNum = arc4random_uniform(15) // range
-        self.someInt = Int(self.randomNum!)
-        self.someDouble = Double(self.someInt!) / 10
+        pendingTask3 = DispatchWorkItem {
         
-        if (self.someDouble! < 0.5) {
-            self.someDouble! = 0.5
+            // hide UI
+            self.doHide()
+            
+            // emulate loading
+            self.randomNum = arc4random_uniform(15) // range
+            self.someInt = Int(self.randomNum!)
+            self.someDouble = Double(self.someInt!) / 10
+            
+            if (self.someDouble! < 0.5) {
+                self.someDouble! = 0.5
+            }
+            
+            // populate loading view
+            self.keyartView.image = UIImage(named: String(describing: self.channelKeyarts[indexPath.row]))
+            self.logoView.image = UIImage(named: String(describing: self.channelLogos[indexPath.row]))
+            self.titleView.text = String(describing: self.channelTitles[indexPath.row])
+            self.metadataView.text = String(describing: self.channelMetadatas[indexPath.row])
+
+            UIView.animate(withDuration: 0.3, animations: {
+                self.loadingView.alpha = 1.0
+            }, completion: { (finished: Bool) in
+                
+                UIView.animate(withDuration: 0.3, delay: self.someDouble!, animations: {
+                    self.doChannelChange(channel: self.channels[indexPath.row])
+                    
+                    self.loadingView.alpha = 0.0
+                }, completion: nil)
+                
+            })
+            
         }
         
-        // populate loading view
-        self.keyartView.image = UIImage(named: String(describing: channelKeyarts[indexPath.row]))
-        self.logoView.image = UIImage(named: String(describing: channelLogos[indexPath.row]))
-        self.titleView.text = String(describing: channelTitles[indexPath.row])
-        self.metadataView.text = String(describing: channelMetadatas[indexPath.row])
-
-        UIView.animate(withDuration: 0.3, animations: {
-            self.loadingView.alpha = 1.0
-        }, completion: { (finished: Bool) in
-            
-            UIView.animate(withDuration: 0.3, delay: self.someDouble!, animations: {
-                self.doChannelChange(channel: self.channels[indexPath.row])
-                
-                self.loadingView.alpha = 0.0
-            }, completion: nil)
-            
-        })
+        DispatchQueue.main.async(execute: self.pendingTask3!)
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
