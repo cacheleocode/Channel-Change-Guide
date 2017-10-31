@@ -9,9 +9,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var logoView: UIImageView!
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var metadataView: UILabel!
+    @IBOutlet weak var durationView: UILabel!
     @IBOutlet weak var loadingbarView: UIImageView!
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var collectionView: CollectionView!
+    @IBOutlet weak var fakeUIView: UIImageView!
     
     // dispatch queue
     
@@ -79,11 +81,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         "S2 E3 | Bout that"
         ], count: 50)
     
+    var timeArrays = Array(repeating: [
+        "1h 38m left",
+        "32m left",
+        "1h 30m left",
+        "2h 20m left",
+        "18m left",
+        "12m left"
+        ], count: 50)
+    
+    var durationArrays = Array(repeating: [
+        "7:00 — 9:00p",
+        "7:00 — 8:00p",
+        "5:00 — 7:30p",
+        "7:15 — 9:15p",
+        "6:50 — 8:30p",
+        "7:00 — 8:00p"
+        ], count: 50)
+    
     var channels = [String]()
     var channelKeyarts = [String]()
     var channelLogos = [String]()
     var channelTitles = [String]()
     var channelMetadatas = [String]()
+    var channelTimes = [String]()
+    var channelDurations = [String]()
     
     // mode
     
@@ -306,12 +328,41 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForegroundNotification), name: .UIApplicationWillEnterForeground, object: nil)
         
         // tap detection
-        // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.respondToTapGesture))
-        // self.view.addGestureRecognizer(tapGesture)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.respondToTapGesture))
         tapGesture.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
         self.view.addGestureRecognizer(tapGesture)
+        
+        // swipe detection
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeDown.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(swipeDown)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeUp.direction = UISwipeGestureRecognizerDirection.up
+        self.view.addGestureRecognizer(swipeUp)
+        
+        // badge layer
+        
+        /*
+        var red = UIColor(red: 100.0/255.0, green: 130.0/255.0, blue: 230.0/255.0, alpha: 1.0)
+        
+        let badgeLayer = CAShapeLayer()
+        
+        badgeLayer.frame = CGRect(x: 20, y: 20, width: 14, height: 14)
+        badgeLayer.fillColor = CGColor(colorSpace: <#T##CGColorSpace#>, components: <#T##UnsafePointer<CGFloat>#>)
+        */
+        
+        
         
         // gradient layer
         
@@ -335,6 +386,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // loading view
         self.loadingView.alpha = 0.0
         
+        // Fake UI View
+        self.fakeUIView.alpha = 0.0
+        self.fakeUIView.frame = CGRect(x: 0, y: 1080, width: 1920, height: 1080)
+        
         // fake populate infinite loop
         
         for array in channelArrays {
@@ -355,6 +410,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         for array in channelMetadataArrays {
             channelMetadatas += array
+        }
+        
+        for array in timeArrays {
+            channelTimes += array
+        }
+        
+        for array in durationArrays {
+            channelDurations += array
         }
         
         // loading bar
@@ -505,15 +568,46 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         DispatchQueue.main.async(execute: self.pendingTask!)
     }
     
+    func doShowFakeUI() {
+        self.doHide()
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.fakeUIView.alpha = 1.0
+            self.fakeUIView.frame = CGRect(x: 0, y: 0, width: 1920, height: 1080)
+        }, completion: nil)
+    }
+    
     func doHide() {
         UIView.animate(withDuration: 0.3, animations: {
             self.overlayView.alpha = 0.0
             self.collectionView.alpha = 0.0
+            self.fakeUIView.alpha = 0.0
+            self.fakeUIView.frame = CGRect(x: 0, y: 1080, width: 1920, height: 1080)
         }, completion: nil)
     }
     
     func respondToTapGesture() {
         self.doHide()
+    }
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.right:
+                debugPrint("Swiped right")
+            case UISwipeGestureRecognizerDirection.down:
+                debugPrint("Swiped down")
+            case UISwipeGestureRecognizerDirection.left:
+                debugPrint("Swiped left")
+            case UISwipeGestureRecognizerDirection.up:
+                // debugPrint("Swiped up")
+                if (self.collectionView.alpha == 0) {
+                    self.doShowFakeUI()
+                }
+            default:
+                break
+            }
+        }
     }
     
     func doChannelChange(channel: String) {
@@ -661,6 +755,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         cell.metadataView.text = String(describing: channelMetadatas[indexPath.row])
         
+        cell.durationView.text = String(describing: channelDurations[indexPath.row])
+        
+        cell.timeView.text = String(describing: channelTimes[indexPath.row])
+        
         cell.alpha = 0.3
         
         return cell
@@ -693,6 +791,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.logoView.image = UIImage(named: String(describing: self.channelLogos[indexPath.row]))
             self.titleView.text = String(describing: self.channelTitles[indexPath.row])
             self.metadataView.text = String(describing: self.channelMetadatas[indexPath.row])
+            self.durationView.text = String(describing: self.channelDurations[indexPath.row])
 
             UIView.animate(withDuration: 0.3, animations: {
                 self.loadingView.alpha = 1.0
@@ -729,8 +828,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         if ((context.nextFocusedIndexPath != nil) && !collectionView.isScrollEnabled) {
             collectionView.scrollToItem(at: context.nextFocusedIndexPath!, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
-            
-            // collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.frame = CGRect(x: 0, y: 0, width: 990, height: 500)
         }
         
         if (context.previouslyFocusedIndexPath != nil) {

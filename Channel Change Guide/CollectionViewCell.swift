@@ -14,6 +14,9 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var logoView: UIImageView!
     @IBOutlet weak var metadataView: UILabel!
+    @IBOutlet weak var badgeView: UIImageView!
+    @IBOutlet weak var timeView: UILabel!
+    @IBOutlet weak var durationView: UILabel!
 }
 
 extension CollectionViewCell {
