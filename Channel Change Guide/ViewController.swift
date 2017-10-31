@@ -335,34 +335,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         // swipe detection
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizerDirection.right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeDown.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(swipeDown)
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipeUp = UISwipeGestureRecognizer(target: self.overlayView, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
-        self.view.addGestureRecognizer(swipeUp)
-        
-        // badge layer
-        
-        /*
-        var red = UIColor(red: 100.0/255.0, green: 130.0/255.0, blue: 230.0/255.0, alpha: 1.0)
-        
-        let badgeLayer = CAShapeLayer()
-        
-        badgeLayer.frame = CGRect(x: 20, y: 20, width: 14, height: 14)
-        badgeLayer.fillColor = CGColor(colorSpace: <#T##CGColorSpace#>, components: <#T##UnsafePointer<CGFloat>#>)
-        */
-        
-        
+        self.overlayView.addGestureRecognizer(swipeUp)
         
         // gradient layer
         
@@ -593,17 +568,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.right:
-                debugPrint("Swiped right")
-            case UISwipeGestureRecognizerDirection.down:
-                debugPrint("Swiped down")
-            case UISwipeGestureRecognizerDirection.left:
-                debugPrint("Swiped left")
             case UISwipeGestureRecognizerDirection.up:
                 // debugPrint("Swiped up")
-                if (self.collectionView.alpha == 0) {
-                    self.doShowFakeUI()
-                }
+                self.doShowFakeUI()
             default:
                 break
             }
