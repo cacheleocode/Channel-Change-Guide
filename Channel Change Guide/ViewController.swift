@@ -721,6 +721,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         cell.pipView.layer.addSublayer(playerLayer2!)
        
+        cell.pipView.alpha = 0.0
+        
         cell.logoView.image = UIImage(named: String(describing: channelLogos[indexPath.row]))
         cell.logoView.contentMode = .scaleAspectFit
         
@@ -733,7 +735,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         cell.timeView.text = String(describing: channelTimes[indexPath.row])
         
         cell.alpha = 0.3
-        
+    
         return cell
     }
     
@@ -797,7 +799,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        let cellNext = collectionView.cellForItem(at: context.nextFocusedIndexPath!)
+        var cell: CollectionViewCell
+        
+        
         
         // As we are not using the default scrollable feature from the UIScrollView we can scroll ourself to the center of the focused cell
         
@@ -806,21 +810,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         
         if (context.previouslyFocusedIndexPath != nil) {
-            
+            cell = collectionView.cellForItem(at: context.previouslyFocusedIndexPath!) as! CollectionViewCell
             
             UIView.animate(withDuration: 0.3, animations: {
                 collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.alpha = 0.3
+                cell.pipView.alpha = 0.0
                 // collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
                 
             }, completion: nil)
         }
         
         if (context.nextFocusedIndexPath != nil) {
+            cell = collectionView.cellForItem(at: context.nextFocusedIndexPath!) as! CollectionViewCell
+            
             UIView.animate(withDuration: 0.3, animations: {
                 collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.alpha = 1.0
+                
                 // collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                 
             }, completion: nil)
+            
+            UIView.animate(withDuration: 0.3, delay: 1.0, animations: {
+                cell.pipView.alpha = 1.0
+            }, completion: nil)
+            
+            
         }
     }
     
