@@ -11,6 +11,7 @@ import UIKit
 class CollectionViewCell: UICollectionViewCell {
     @IBOutlet fileprivate weak var collectionView: UICollectionView!
     @IBOutlet weak var keyartView: UIImageView!
+    @IBOutlet weak var pipView: UIView!
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var logoView: UIImageView!
     @IBOutlet weak var metadataView: UILabel!

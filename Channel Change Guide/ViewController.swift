@@ -34,6 +34,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var playerLayerHBO: AVPlayerLayer?
     var playerLayerHSN: AVPlayerLayer?
     
+    // pip layers
+    
+    var playerLayer2: AVPlayerLayer?
+    var playerLayerCBS2: AVPlayerLayer?
+    var playerLayerCNN2: AVPlayerLayer?
+    var playerLayerCSN2: AVPlayerLayer?
+    var playerLayerESPN2: AVPlayerLayer?
+    var playerLayerFOX2: AVPlayerLayer?
+    
     // cell content
     
     let channelArrays = Array(repeating: [
@@ -169,160 +178,134 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var images: [UIImage]!
     var animatedImage: UIImage!
     
+    
+    var player = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "amc", ofType:"mp4")!))
+    var playerCBS = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "cbs", ofType:"mp4")!))
+    var playerCNN = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "cnn", ofType:"mp4")!))
+    var playerCSN = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "csn", ofType:"mp4")!))
+    var playerESPN = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "espn", ofType:"mp4")!))
+    var playerFOX = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "fox", ofType:"mp4")!))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         (UIApplication.shared as! MyApplication).myVC = self
         
-        // video player AMC
-        guard let path = Bundle.main.path(forResource: "amc", ofType:"mp4") else {
-            debugPrint("video not found")
-            return
-        }
+        // AMC
         
-        let player = AVPlayer(url: URL(fileURLWithPath: path))
-        
-        playerLayer = AVPlayerLayer(player: player)
+        playerLayer = AVPlayerLayer(player: self.player)
         playerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayer!.frame = self.videoView.frame
         playerLayer?.isHidden = false
         
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil, using: { (_) in
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
-                player.seek(to: kCMTimeZero)
-                player.play()
+                self.player.seek(to: kCMTimeZero)
+                self.player.play()
             }
         })
         
-        player.isMuted = false;
-        player.play()
+        self.player.isMuted = false;
+        self.player.play()
         
         self.videoView.layer.addSublayer(playerLayer!)
         
-        // video player CBS
-        guard let pathCBS = Bundle.main.path(forResource: "cbs", ofType:"mp4") else {
-            debugPrint("video not found")
-            return
-        }
-        
-        let playerCBS = AVPlayer(url: URL(fileURLWithPath: pathCBS))
-        
-        playerLayerCBS = AVPlayerLayer(player: playerCBS)
+        // CBS
+
+        playerLayerCBS = AVPlayerLayer(player: self.playerCBS)
         playerLayerCBS?.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayerCBS!.frame = self.videoView.frame
         playerLayerCBS?.isHidden = true
         
         self.videoView.layer.addSublayer(playerLayerCBS!)
         
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCBS.currentItem, queue: nil, using: { (_) in
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.playerCBS.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
-                playerCBS.seek(to: kCMTimeZero)
-                playerCBS.play()
+                self.playerCBS.seek(to: kCMTimeZero)
+                self.playerCBS.play()
             }
         })
         
-        playerCBS.isMuted = true;
-        playerCBS.play()
+        self.playerCBS.isMuted = true;
+        self.playerCBS.play()
  
         // video player CNN
-        guard let pathCNN = Bundle.main.path(forResource: "cnn", ofType:"mp4") else {
-            debugPrint("video not found")
-            return
-        }
         
-        let playerCNN = AVPlayer(url: URL(fileURLWithPath: pathCNN))
-        
-        playerLayerCNN = AVPlayerLayer(player: playerCNN)
+        playerLayerCNN = AVPlayerLayer(player: self.playerCNN)
         playerLayerCNN?.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayerCNN!.frame = self.videoView.frame
         playerLayerCNN?.isHidden = true
         
         self.videoView.layer.addSublayer(playerLayerCNN!)
         
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCNN.currentItem, queue: nil, using: { (_) in
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.playerCNN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
-                playerCNN.seek(to: kCMTimeZero)
-                playerCNN.play()
+                self.playerCNN.seek(to: kCMTimeZero)
+                self.playerCNN.play()
             }
         })
         
-        playerCNN.isMuted = true;
-        playerCNN.play()
+        self.playerCNN.isMuted = true;
+        self.playerCNN.play()
         
         // video player CSN
-        guard let pathCSN = Bundle.main.path(forResource: "csn", ofType:"mp4") else {
-            debugPrint("video not found")
-            return
-        }
         
-        let playerCSN = AVPlayer(url: URL(fileURLWithPath: pathCSN))
-        
-        playerLayerCSN = AVPlayerLayer(player: playerCSN)
+        playerLayerCSN = AVPlayerLayer(player: self.playerCSN)
         playerLayerCSN?.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayerCSN!.frame = self.videoView.frame
         playerLayerCSN?.isHidden = true
         
         self.videoView.layer.addSublayer(playerLayerCSN!)
         
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerCSN.currentItem, queue: nil, using: { (_) in
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.playerCSN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
-                playerCSN.seek(to: kCMTimeZero)
-                playerCSN.play()
+                self.playerCSN.seek(to: kCMTimeZero)
+                self.playerCSN.play()
             }
         })
         
-        playerCSN.isMuted = true;
-        playerCSN.play()
+        self.playerCSN.isMuted = true;
+        self.playerCSN.play()
         
         // video player ESPN
-        guard let pathESPN = Bundle.main.path(forResource: "espn", ofType:"mp4") else {
-            debugPrint("video not found")
-            return
-        }
         
-        let playerESPN = AVPlayer(url: URL(fileURLWithPath: pathESPN))
-        
-        playerLayerESPN = AVPlayerLayer(player: playerESPN)
+        playerLayerESPN = AVPlayerLayer(player: self.playerESPN)
         playerLayerESPN?.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayerESPN!.frame = self.videoView.frame
         playerLayerESPN?.isHidden = true
         
         self.videoView.layer.addSublayer(playerLayerESPN!)
         
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerESPN.currentItem, queue: nil, using: { (_) in
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.playerESPN.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
-                playerESPN.seek(to: kCMTimeZero)
-                playerESPN.play()
+                self.playerESPN.seek(to: kCMTimeZero)
+                self.playerESPN.play()
             }
         })
         
-        playerESPN.isMuted = true;
-        playerESPN.play()
+        self.playerESPN.isMuted = true;
+        self.playerESPN.play()
         
         // video player FOX
-        guard let pathFOX = Bundle.main.path(forResource: "fox", ofType:"mp4") else {
-            debugPrint("video not found")
-            return
-        }
         
-        let playerFOX = AVPlayer(url: URL(fileURLWithPath: pathFOX))
-        
-        playerLayerFOX = AVPlayerLayer(player: playerFOX)
+        playerLayerFOX = AVPlayerLayer(player: self.playerFOX)
         playerLayerFOX?.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayerFOX!.frame = self.videoView.frame
         playerLayerFOX?.isHidden = true
         
         self.videoView.layer.addSublayer(playerLayerFOX!)
         
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerFOX.currentItem, queue: nil, using: { (_) in
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.playerFOX.currentItem, queue: nil, using: { (_) in
             DispatchQueue.main.async {
-                playerFOX.seek(to: kCMTimeZero)
-                playerFOX.play()
+                self.playerFOX.seek(to: kCMTimeZero)
+                self.playerFOX.play()
             }
         })
         
-        playerFOX.isMuted = true;
-        playerFOX.play()
+        self.playerFOX.isMuted = true;
+        self.playerFOX.play()
+        
+  
 
         // resume playback upon app focus
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForegroundNotification), name: .UIApplicationWillEnterForeground, object: nil)
@@ -710,11 +693,34 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
+        let channel = self.channels[indexPath.row]
+        
         
         cell.keyartView.image = UIImage(named: String(describing: channelKeyarts[indexPath.row]))
         cell.keyartView.contentMode = .scaleAspectFit
-        // cell.keyartView.bounds = cell.keyartView.frame.insetBy(dx: 5.0, dy: 5.0)
         
+        switch channel {
+        case "amc":
+            playerLayer2 = AVPlayerLayer(player: self.player)
+        case "cbs":
+            playerLayer2 = AVPlayerLayer(player: self.playerCBS)
+        case "cnn":
+            playerLayer2 = AVPlayerLayer(player: self.playerCNN)
+        case "csn":
+            playerLayer2 = AVPlayerLayer(player: self.playerCSN)
+        case "espn":
+            playerLayer2 = AVPlayerLayer(player: self.playerESPN)
+        case "fox":
+            playerLayer2 = AVPlayerLayer(player: self.playerFOX)
+        default:
+            debugPrint("default")
+        }
+
+        playerLayer2?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        playerLayer2!.frame = cell.pipView.frame
+        
+        cell.pipView.layer.addSublayer(playerLayer2!)
+       
         cell.logoView.image = UIImage(named: String(describing: channelLogos[indexPath.row]))
         cell.logoView.contentMode = .scaleAspectFit
         
@@ -791,6 +797,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        let cellNext = collectionView.cellForItem(at: context.nextFocusedIndexPath!)
+        
         // As we are not using the default scrollable feature from the UIScrollView we can scroll ourself to the center of the focused cell
         
         if ((context.nextFocusedIndexPath != nil) && !collectionView.isScrollEnabled) {
