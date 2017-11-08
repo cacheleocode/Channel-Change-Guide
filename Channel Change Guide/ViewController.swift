@@ -9,6 +9,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var logoView: UIImageView!
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var metadataView: UILabel!
+    @IBOutlet weak var gradientView: UILabel!
     @IBOutlet weak var durationView: UILabel!
     @IBOutlet weak var loadingbarView: UIImageView!
     @IBOutlet weak var overlayView: UIView!
@@ -178,6 +179,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var images: [UIImage]!
     var animatedImage: UIImage!
     
+    // actual players
     
     var player = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "amc", ofType:"mp4")!))
     var playerCBS = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "cbs", ofType:"mp4")!))
@@ -185,6 +187,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var playerCSN = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "csn", ofType:"mp4")!))
     var playerESPN = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "espn", ofType:"mp4")!))
     var playerFOX = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "fox", ofType:"mp4")!))
+    
+    // current channel
+    
+    var currentChannel: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -561,6 +567,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func doChannelChange(channel: String) {
+        currentChannel = channel
+        
+        debugPrint(currentChannel)
+        
         switch channel {
         case "amc":
             playerLayer?.player?.isMuted = false
@@ -817,7 +827,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 cell.pipView.alpha = 0.0
                 // collectionView.cellForItem(at: context.previouslyFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
                 
-            }, completion: nil)
+            }, completion: { (finished: Bool) in
+                cell.keyartView.adjustsImageWhenAncestorFocused = true
+            })
         }
         
         if (context.nextFocusedIndexPath != nil) {
@@ -829,10 +841,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 // collectionView.cellForItem(at: context.nextFocusedIndexPath!)?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                 
             }, completion: nil)
+         
             
-            UIView.animate(withDuration: 0.3, delay: 1.0, animations: {
-                cell.pipView.alpha = 1.0
-            }, completion: nil)
+            // emulate loading
+            self.randomNum = arc4random_uniform(15) // range
+            self.someInt = Int(self.randomNum!)
+            self.someDouble = Double(self.someInt!) / 10
+            
+            if (self.someDouble! < 0.5) {
+                self.someDouble! = 0.5
+            }
+            
+            if (self.channels[(context.nextFocusedIndexPath?.row)!] != currentChannel) {
+                UIView.animate(withDuration: 0.3, delay: self.someDouble!, animations: {
+                    cell.pipView.alpha = 1.0
+                }, completion: { (finished: Bool) in
+                    cell.keyartView.adjustsImageWhenAncestorFocused = false
+                })
+            }
             
             
         }
@@ -843,6 +869,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         self.collectionView?.scrollToItem(at: IndexPath(row: 149, section: 0), at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
         
+        self.currentChannel = self.channels[0]
+        debugPrint(currentChannel)
     }
     
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
